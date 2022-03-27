@@ -30,11 +30,6 @@ app.use(session({
 }));
 
 app.use(flash());
-// app.use(function(req, res, next){
-//     res.locals.errors = req.flash("errors");
-//     res.locals.success = req.flash("success");
-//     next();
-// });
 
 app.set('views', path.join(__dirname, '/views'));
 app.set('view engine','ejs');
