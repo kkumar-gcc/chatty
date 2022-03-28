@@ -41,7 +41,21 @@
                  
                   <%}%>
                 <%}%>
+                <input
+                type="text"
+                placeholder="Username "
+                name="username"
+                id="username"
+              />
+              <% if(messages.errors) { %> 
               
+                <% if(messages.errors[0].username) { %>
+                  <div class="text-danger">
+                    <span><%=messages.errors[0].username%></span>
+                  </div> 
+                 
+                  <%}%>
+                <%}%>
               <input type="text" placeholder="Name" id="name" name="name" />
               <% if(messages.errors) { %> 
               

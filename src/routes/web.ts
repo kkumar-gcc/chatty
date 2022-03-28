@@ -29,7 +29,7 @@ export default function (app: Application) {
     app.get("/logout",isLogin,deleteUserSessionsHandler);
 
     app.get("/home",isLogin,(req: Request, res: Response) => {
-        res.render("chat.ejs",{user:req.session.user});
+        res.render("home.ejs",{user:req.session.user});
     });
 
 
