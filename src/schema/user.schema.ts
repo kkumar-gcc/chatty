@@ -15,6 +15,8 @@ export const createUserSchema = object({
         email: string()
             .email("Must be a valid email")
             .required("Email is required"),
+        username: string()
+            .required("username is required"),
     }),
 });
 

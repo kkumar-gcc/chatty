@@ -4,6 +4,7 @@ import log from '../logger';
 import { createSession, findSessions } from '../services/session.service';
 import { signJwt, verifyJwt } from '../utils/jwt.utils';
 import config from '../config/default';
+import Session from '../models/session.model';
 export async function createUserSessionHandler(req: Request, res: Response) {
     //  log.info(req.body);
     const user = await validatePassword(req.body);
@@ -47,8 +48,10 @@ export async function getUserSessionsHandler(req: Request, res: Response) {
 }
 
 export async function deleteUserSessionsHandler(req: Request, res: Response) {
+    const user = req.session.user as any;
 
     if (req.session) {
+       await Session.deleteMany({ "user" :Object( user._id)});
         req.session.destroy(err => {
           if (err) {
             res.status(400).send('Unable to log out')
