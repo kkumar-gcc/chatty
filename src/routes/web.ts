@@ -10,6 +10,9 @@ import log from "../logger";
 import flash from "connect-flash";
 import isLogin from "../middlewares/isLogin";
 import loggedIn from "../middlewares/loggedIn";
+import { getChatHandler, getRoomHandler } from "../controllers/chat.controller";
+import { getHomeHandler } from "../controllers/home.controller";
+import { postMessageHandler } from "../controllers/message.controller";
 
 export default function (app: Application) {
 
@@ -24,14 +27,15 @@ export default function (app: Application) {
        
         res.render("login.ejs");
     });
+    app.get("/chat",isLogin,getChatHandler);
+
     app.post("/login",loggedIn,validateRequest(createUserSessionSchema),createUserSessionHandler)
 
     app.get("/logout",isLogin,deleteUserSessionsHandler);
 
-    app.get("/home",isLogin,(req: Request, res: Response) => {
-        res.render("home.ejs",{user:req.session.user});
-    });
-
+    app.get("/home",isLogin,getHomeHandler);
+    app.get("/chat/:id",isLogin,getRoomHandler);
+    app.post("/chat/:id",isLogin,postMessageHandler);
 
   
     //just for debugging

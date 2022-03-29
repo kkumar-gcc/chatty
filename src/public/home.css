@@ -176,6 +176,7 @@ ul {
   background-image: url("https://themesbrand.com/doot/layouts/assets/images/bg-pattern/pattern-05.png");
   overflow-y: scroll;
   max-height: 75vh;
+  min-height: 75vh;
 }
 .chat .chat-history .message-data {
   margin-bottom: 15px;

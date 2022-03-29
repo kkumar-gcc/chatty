@@ -5,8 +5,8 @@ import { createSession, findSessions } from '../services/session.service';
 import { signJwt, verifyJwt } from '../utils/jwt.utils';
 import config from '../config/default';
 import Session from '../models/session.model';
+import User from '../models/user.model';
 export async function createUserSessionHandler(req: Request, res: Response) {
-    //  log.info(req.body);
     const user = await validatePassword(req.body);
 
     if (!user) {
@@ -35,7 +35,8 @@ export async function createUserSessionHandler(req: Request, res: Response) {
         { ...user, session: session._id },
         { expiresIn: config.accessTokenTtl }
     );
-    return res.redirect("/home");
+   return res.redirect("/home");
+    
 }
 
 export async function getUserSessionsHandler(req: Request, res: Response) {

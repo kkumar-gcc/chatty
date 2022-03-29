@@ -6,7 +6,7 @@ export interface SessionDocument extends mongoose.Document {
     userAgent:string;
     createdAt:Date;
     updateAt:Date;
-  }
+}
 
 
 const SessionSchema = new mongoose.Schema(
