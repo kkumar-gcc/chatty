@@ -11,10 +11,6 @@ export async function createUser(input: DocumentDefinition<UserDocument>) {
    
 }
 
-// function findUser(email: any, password: any) {
-
-// }
-
 export async function validatePassword({ email, password, }: { email: UserDocument["email"], password: string }) {
     const user = await User.findOne({email});
 
@@ -22,13 +18,12 @@ export async function validatePassword({ email, password, }: { email: UserDocume
         return false;
     }
 
-    const isValid= await user.comparePassword(password);
+    const isValid = await user.comparePassword(password);
     if(!isValid)
     {
         return false;
     }
   
-// log.info(userOut,user._id,userOut._id);
     return  omit(user.toJSON(),"password");
 }
 

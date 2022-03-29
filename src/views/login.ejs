@@ -61,6 +61,7 @@
   
                 <h2>Sign In</h2>
                 <input type="email" placeholder="Email " name="email" id="email">
+
                 <% if(messages.errors) { %> 
               
                   <% if(messages.errors[0].email) { %>
@@ -69,7 +70,8 @@
                     </div> 
                    
                     <%}%>
-                  <%}%>
+                <%}%>
+                
                 <input type="password" placeholder="Password" id="password" name="password">
                 <% if(messages.errors) { %> 
               

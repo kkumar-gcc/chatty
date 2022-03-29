@@ -5,7 +5,6 @@ import log from '../logger';
 export async function createUserHandler(req:Request,res:Response) {
     try{
         const user = await createUser(req.body);
-
         return res.render("login.ejs",{success:"account successfully created"});
 
     }catch(e:any){
