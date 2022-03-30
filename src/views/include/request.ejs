@@ -1,0 +1,69 @@
+<div
+  class="offcanvas offcanvas-start"
+  tabindex="-1"
+  id="offcanvasRequest"
+  aria-labelledby="offcanvasRequestLabel"
+>
+  <div class="offcanvas-header">
+    <button
+      type="button"
+      class="btn-close text-back"
+      data-bs-dismiss="offcanvas"
+      aria-label="Close"
+    ></button>
+
+    <!-- <h5 class="offcanvas-title" id="offcanvasExampleLabel">Offcanvas</h5> -->
+  </div>
+  <div class="offcanvas-body">
+    <div>
+      <% if(user.friends.length>0) {%>
+      <div class="requests">
+        <h4>Chat Requests</h4>
+        <table class="rwd-table">
+          <tr>
+            <th>User</th>
+            <th>Name</th>
+            <th>Action</th>
+          </tr>
+         <% for(var  i=0;i<user.friends.length;i++) {%>
+           <% if(user.friends[i].status=="2") {%>  
+          <tr>
+            <td data-th="User">hello</td>
+            <td data-th="Name">Adventure, Sci-fi</td>
+            <td data-th="Action">1977</td>
+          </tr>
+          <% } %> 
+          <% } %> 
+        </table>
+      </div>
+      <div class="pending-request">
+        <h4>Requested Chats</h4>
+        <table class="rwd-table">
+          <tr>
+            <th>User</th>
+            <th>Name</th>
+            <th>Action</th>
+          </tr>
+          <tr>
+            <td data-th="Movie Title">Star Wars</td>
+            <td data-th="Genre">Adventure, Sci-fi</td>
+            <td data-th="Year">1977</td>
+          </tr>
+          <tr>
+            <td data-th="Movie Title">Howard The Duck</td>
+            <td data-th="Genre">"Comedy"</td>
+            <td data-th="Year">1986</td>
+          </tr>
+          <tr>
+            <td data-th="Movie Title">American Graffiti</td>
+            <td data-th="Genre">Comedy, Drama</td>
+            <td data-th="Year">1973</td>
+          </tr>
+        </table>
+      </div>
+      <% } else {%>
+      <p>no friends</p>
+      <% } %>
+    </div>
+  </div>
+</div>

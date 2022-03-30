@@ -13,12 +13,13 @@ import loggedIn from "../middlewares/loggedIn";
 import { getChatHandler, getRoomHandler } from "../controllers/chat.controller";
 import { getHomeHandler } from "../controllers/home.controller";
 import { postMessageHandler } from "../controllers/message.controller";
+import { searchResultHandler,getsearchResultHandler } from "../controllers/search.controller";
+import { friendReqActionHandler, userFriendHandler } from "../controllers/friend.controller";
 
 export default function (app: Application) {
 
     app.get("/register",loggedIn, (req: Request, res: Response) => {
         res.render("register.ejs");
-
     });
 
     app.post("/register",loggedIn,validateRequest(createUserSchema),createUserHandler);
@@ -27,7 +28,7 @@ export default function (app: Application) {
        
         res.render("login.ejs");
     });
-    app.get("/chat",isLogin,getChatHandler);
+    // app.get("/chat",isLogin,getChatHandler);
 
     app.post("/login",loggedIn,validateRequest(createUserSessionSchema),createUserSessionHandler)
 
@@ -37,9 +38,14 @@ export default function (app: Application) {
     app.get("/chat/:id",isLogin,getRoomHandler);
     app.post("/chat/:id",isLogin,postMessageHandler);
 
+    app.get("/search",isLogin,searchResultHandler);
+    app.post("/search/user",isLogin,getsearchResultHandler);
   
-    //just for debugging
+    app.post("/user/request",isLogin,userFriendHandler);
+    
+    app.post("/user/requestAccept",isLogin,friendReqActionHandler);
 
+    ///testing routes
     app.get("/verify",async (req: Request, res: Response) => {
 
        const jwtToken= signJwt({
