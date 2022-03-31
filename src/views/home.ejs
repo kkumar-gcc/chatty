@@ -32,13 +32,14 @@
   <body>
     <%-include("include/request.ejs",{user:user}) %>
     <%-include("include/search.ejs") %>
+    <%-include("include/profile.ejs",{user:user}) %>
     <div class="main-container clearfix">
       <div class="chat-list">
         <div class="user-container">
-          <img
-            src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_01_green.jpg"
-            alt="avatar"
-          />
+          <div class="profile">
+            <h2 class="profile-tag"><%= user.name.charAt(0)%></h2>
+          </div>
+
           <div class="user-about">
             <div class="user-name"><%= user.name%> @<%= user.username %></div>
             <div class="status"><i class="fa fa-circle online"></i> online</div>
@@ -58,14 +59,25 @@
                 aria-labelledby="dropdownMenu2"
               >
                 <li><a class="dropdown-item" href="/chat">Start chat</a></li>
-                <li><a class="dropdown-item" href="/profile">setting</a></li>
                 <li>
                   <a
                     class="dropdown-item"
                     data-bs-toggle="offcanvas"
-                    href="#offcanvasRequest"
+                    href="#offcanvasProfile"
                     role="button"
                     aria-controls="offcanvasRequest"
+                  >
+                    Setting
+                  </a>
+                </li>
+                <li>
+                  <a
+                    data-bs-toggle="modal"
+                    data-bs-target="#modalRequest"
+                    class="dropdown-item"
+                    href="#modalRequest"
+                    role="button"
+                    aria-controls="modalRequest"
                   >
                     Chat request
                   </a>
@@ -91,12 +103,10 @@
           </div>
           <ul class="list">
             <% for(var i=0; i < users.length; i++) { %>
-
-            <li class="clearfix">
-              <img
-                src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_01.jpg"
-                alt="avatar"
-              />
+            <li class="clearfix people-list-header">
+              <div class="profile">
+                <h2 class="profile-tag"><%= users[i].name.charAt(0)%></h2>
+              </div>
               <div class="about">
                 <div class="name">
                   <a href="/chat/<%=users[i]._id%>-<%=user._id%>"

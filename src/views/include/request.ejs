@@ -1,69 +1,46 @@
 <div
-  class="offcanvas offcanvas-start"
+  class="modal fade"
+  id="modalRequest"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
   tabindex="-1"
-  id="offcanvasRequest"
-  aria-labelledby="offcanvasRequestLabel"
+  aria-labelledby="modalRequestLabel"
+  aria-hidden="true"
 >
-  <div class="offcanvas-header">
-    <button
-      type="button"
-      class="btn-close text-back"
-      data-bs-dismiss="offcanvas"
-      aria-label="Close"
-    ></button>
-
-    <!-- <h5 class="offcanvas-title" id="offcanvasExampleLabel">Offcanvas</h5> -->
-  </div>
-  <div class="offcanvas-body">
-    <div>
-      <% if(user.friends.length>0) {%>
-      <div class="requests">
-        <h4>Chat Requests</h4>
-        <table class="rwd-table">
-          <tr>
-            <th>User</th>
-            <th>Name</th>
-            <th>Action</th>
-          </tr>
-         <% for(var  i=0;i<user.friends.length;i++) {%>
-           <% if(user.friends[i].status=="2") {%>  
-          <tr>
-            <td data-th="User">hello</td>
-            <td data-th="Name">Adventure, Sci-fi</td>
-            <td data-th="Action">1977</td>
-          </tr>
-          <% } %> 
-          <% } %> 
-        </table>
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalRequestLabel">Requests</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
       </div>
-      <div class="pending-request">
-        <h4>Requested Chats</h4>
-        <table class="rwd-table">
-          <tr>
-            <th>User</th>
-            <th>Name</th>
-            <th>Action</th>
-          </tr>
-          <tr>
-            <td data-th="Movie Title">Star Wars</td>
-            <td data-th="Genre">Adventure, Sci-fi</td>
-            <td data-th="Year">1977</td>
-          </tr>
-          <tr>
-            <td data-th="Movie Title">Howard The Duck</td>
-            <td data-th="Genre">"Comedy"</td>
-            <td data-th="Year">1986</td>
-          </tr>
-          <tr>
-            <td data-th="Movie Title">American Graffiti</td>
-            <td data-th="Genre">Comedy, Drama</td>
-            <td data-th="Year">1973</td>
-          </tr>
-        </table>
+      <div class="modal-body">
+        <div id="fb">
+          <div id="fb-top">
+            <p>
+              <b>Friend Requests</b>
+              <!-- <span>Find Friends &bull; Settings</span> -->
+            </p>
+          </div>
+          <div class="fb-bottom">
+            <img
+              src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_01.jpg"
+              height="100"
+              width="100"
+              alt="Image of woman"
+            />
+            <p id="info"><b>Natalie G.</b></p>
+            <div id="button-block">
+              <div id="confirm">Confirm</div>
+              <div id="delete">Delete Request</div>
+            </div>
+          </div>
+        </div>
       </div>
-      <% } else {%>
-      <p>no friends</p>
-      <% } %>
     </div>
   </div>
 </div>

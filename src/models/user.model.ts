@@ -1,13 +1,14 @@
 import mongoose from "mongoose";
 import bcrypt from 'bcrypt';
 import config from "../config/default";
+import { FriendDocument } from "./friend.model";
 
 export interface UserDocument extends mongoose.Document {
     _id: string;
     email: string;
     name: string;
     username: string;
-
+    friends:FriendDocument["_id"];
     password: string;
     createdAt: Date;
     updateAt: Date;
@@ -19,8 +20,7 @@ const UserSchema = new mongoose.Schema(
     {
         email: { type: String, required: true, unique: true },
         username: { type: String, required: true, unique: true },
-        pendings: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Friend' }],
-        friends: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+        friends:[{ type: mongoose.Schema.Types.ObjectId, ref: 'Friend'}],
         name: { type: String, required: true },
         password: { type: String, required: true },
     },

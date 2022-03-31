@@ -1,14 +1,14 @@
 import mongoose from "mongoose";
 import { ChatDocument } from "./chat.model";
 import { UserDocument } from "./user.model";
-// export interface MessageDocument extends mongoose.Document {
-//     _id:string;
-//     // chatId:ChatDocument["_id"];
-//     content: string;
-//     sender:UserDocument["_id"];
-//     createdAt:Date;
-//     updateAt:Date;
-// }
+export interface FriendDocument extends mongoose.Document {
+    _id:string;
+    status: number;
+    requester:UserDocument["_id"];
+    recipient:UserDocument["_id"];
+    createdAt:Date;
+    updateAt:Date;
+}
 
 const FriendSchema = new mongoose.Schema(
     {
