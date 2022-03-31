@@ -138,6 +138,7 @@ ul {
     transform: translate(-50%, -50%);
 	border-radius: 20px;
 	opacity: 0.4;
+  padding:auto;
 	width: 250px;
 	color:  white;
 }
@@ -148,6 +149,14 @@ ul {
   padding: 10px 30px;
   border-bottom: 2px solid #eaeaf1;
   background: #f2f2f2;
+  display: flex;
+  flex-direction: row;
+  position: relative;
+}
+.chat .chat-header .chat-header-setting{
+    position: absolute;
+    top: 10px;
+    right: 30px;
 }
 .chat .chat-header img {
   float: left;
@@ -196,6 +205,10 @@ ul {
   position: relative;
   -webkit-box-shadow: 0 2px 4px rgba(15, 34, 58, 0.12);
   box-shadow: 0 2px 4px rgba(15, 34, 58, 0.12);
+}
+.people-list-header{
+  display: flex;
+  flex-direction: row;
 }
 .chat .chat-history .message:after {
   bottom: 100%;
@@ -300,4 +313,15 @@ ul {
   .main-container {
     flex-direction: column;
   }
+}
+
+.profile{
+  width: 50px;
+  height:50px;
+  border-radius: 50%;
+  text-align: center;
+  vertical-align: middle;
+  background: linear-gradient(-45deg, rgb(192, 221, 192), rgb(151, 196, 151), rgb(169, 209, 169), rgb(192, 221, 192));
+  border: 1px solid rgb(135, 211, 135);
+  color: rgb(9, 107, 9);
 }
