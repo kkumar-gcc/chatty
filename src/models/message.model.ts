@@ -12,7 +12,6 @@ import { UserDocument } from "./user.model";
 
 const MessageSchema = new mongoose.Schema(
     {
-        // chatId: { type: mongoose.Schema.Types.ObjectId, ref:"Chat" },
         message: { type: String },
         receiver: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
         sender: { type: mongoose.Schema.Types.ObjectId, ref: "User" },

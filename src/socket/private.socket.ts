@@ -7,8 +7,10 @@ module.exports = function (io: any) {
         socket.on("private message",(message:any,callback:any)=>{
           io.to(message.room).emit("new message",{
               text:message.text,
-              sender:message.sender
+              sender:message.sender,
+              senderId:message.senderId
           });
+          io.emit('message display',{});
           callback();
         })
     });

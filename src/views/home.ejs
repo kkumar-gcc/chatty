@@ -6,12 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
-      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
       crossorigin="anonymous"
     />
-  
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+      crossorigin="anonymous"
+    ></script>
 
     <link
       rel="stylesheet"
@@ -21,8 +26,12 @@
       referrerpolicy="no-referrer"
     />
     <link rel="stylesheet" href="/home.css" />
+    <link rel="stylesheet" href="/table.css" />
+    <link rel="stylesheet" href="/searchresult.css" />
   </head>
   <body>
+    <%-include("include/request.ejs",{user:user}) %>
+    <%-include("include/search.ejs") %>
     <div class="main-container clearfix">
       <div class="chat-list">
         <div class="user-container">
@@ -38,50 +47,68 @@
             <div class="dropdown">
               <i
                 class="fa-solid fa-ellipsis-vertical options"
-                class="dropdown-toggle"
+                class="btn btn-secondary dropdown-toggle"
                 type="button"
                 id="dropdownMenu2"
-                data-toggle="dropdown"
-                aria-haspopup="true"
+                data-bs-toggle="dropdown"
                 aria-expanded="false"
               ></i>
-              <div
-                class="dropdown-menu dropdown-menu-right"
+              <ul
+                class="dropdown-menu dropdown-menu-end dropdown-menu-lg-end"
                 aria-labelledby="dropdownMenu2"
               >
-                <!-- <h6 class="dropdown-header">Dropdown header</h6> -->
-                <a class="dropdown-item" href="/chat">Start chat</a>
-                <a class="dropdown-item" href="/profile">setting</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="/logout">logout</a>
-              </div>
+                <li><a class="dropdown-item" href="/chat">Start chat</a></li>
+                <li><a class="dropdown-item" href="/profile">setting</a></li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    data-bs-toggle="offcanvas"
+                    href="#offcanvasRequest"
+                    role="button"
+                    aria-controls="offcanvasRequest"
+                  >
+                    Chat request
+                  </a>
+                </li>
+                <li><hr class="dropdown-divider" /></li>
+                <li><a class="dropdown-item" href="/logout">logout</a></li>
+              </ul>
             </div>
           </div>
         </div>
 
         <div class="people-list" id="people-list">
           <div class="search">
-            <input type="text" placeholder="search" />
-            <i class="fa fa-search"></i>
+            <input
+              type="text"
+              id="search"
+              name="search"
+              value="Search User"
+              alt="Add to Cart"
+              data-bs-toggle="modal"
+              data-bs-target="#staticBackdrop"
+            />
           </div>
           <ul class="list">
-
             <% for(var i=0; i < users.length; i++) { %>
-              
-           
-              <li class="clearfix">
-                <img
-                  src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_01.jpg"
-                  alt="avatar"
-                />
-                <div class="about">
-                  <div class="name"><a href="/chat/<%=users[i]._id%>-<%=user._id%>"><%= users[i].name %></a></div>
-                  <div class="status">
-                    <i class="fa fa-circle online"></i> online
-                  </div>
+
+            <li class="clearfix">
+              <img
+                src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_01.jpg"
+                alt="avatar"
+              />
+              <div class="about">
+                <div class="name">
+                  <a href="/chat/<%=users[i]._id%>-<%=user._id%>"
+                    ><%= users[i].name %></a
+                  >
                 </div>
-              </li>
-              <%}%>
+                <div class="status">
+                  <i class="fa fa-circle online"></i> online
+                </div>
+              </div>
+            </li>
+            <%}%>
           </ul>
         </div>
       </div>
@@ -97,19 +124,23 @@
     <!-- end container -->
 
     <script
-    src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-    crossorigin="anonymous"
-  ></script>
-  <script
-    src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
-    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-    crossorigin="anonymous"
-  ></script>
-  <script
-    src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
-    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-    crossorigin="anonymous"
-  ></script>
+      src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"
+      integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.2/bootstrap3-typeahead.js"
+      integrity="sha512-P2Z/b+j031xZuS/nr8Re8dMwx6pNIexgJ7YqcFWKIqCdbjynk4kuX/GrqpQWEcI94PRCyfbUQrjRcWMi7btb0g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script src="/ajaxSubmit.js"></script>
   </body>
 </html>

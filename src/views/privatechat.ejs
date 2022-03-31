@@ -5,12 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
-      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-      crossorigin="anonymous"
-    />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
     <link
       rel="stylesheet"
@@ -22,9 +19,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.0.0/mustache.min.js
 "></script>
     <link rel="stylesheet" href="/home.css" />
+    <link rel="stylesheet" href="/table.css" />
+    <link rel="stylesheet" href="/searchresult.css" />
   </head>
   <body>
+    <%-include("include/request.ejs",{user:user}) %>
+    <%-include("include/search.ejs") %>
     <div class="main-container clearfix">
+    
       <div class="chat-list">
         <div class="user-container">
           <img
@@ -37,33 +39,31 @@
           </div>
           <div class="setting">
             <div class="dropdown">
-              <i
-                class="fa-solid fa-ellipsis-vertical options"
-                class="dropdown-toggle"
-                type="button"
-                id="dropdownMenu2"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              ></i>
-              <div
-                class="dropdown-menu dropdown-menu-right"
-                aria-labelledby="dropdownMenu2"
-              >
-                <!-- <h6 class="dropdown-header">Dropdown header</h6> -->
-                <a class="dropdown-item" href="/chat">Start chat</a>
-                <a class="dropdown-item" href="/profile">setting</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="/logout">logout</a>
-              </div>
+              <i class="fa-solid fa-ellipsis-vertical options"class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false"></i>
+              <ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg-end" aria-labelledby="dropdownMenu2">
+                <li><a class="dropdown-item" href="/chat">Start chat</a></li>
+                <li><a class="dropdown-item" href="/profile">setting</a></li>
+                <li> <a class="dropdown-item " data-bs-toggle="offcanvas" href="#offcanvasRequest" role="button" aria-controls="offcanvasRequest">
+                  Chat request
+                </a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="/logout">logout</a></li>
+              </ul>
             </div>
           </div>
         </div>
 
         <div class="people-list" id="people-list">
           <div class="search">
-            <input type="text" placeholder="search" />
-            <i class="fa fa-search"></i>
+            <input
+              type="text"
+              id="search"
+              name="search"
+              value="Search User"
+              alt="Add to Cart"
+              data-bs-toggle="modal"
+              data-bs-target="#staticBackdrop"
+            />
           </div>
           <ul class="list">
             <% for(var i=0; i < users.length; i++) { %>
@@ -94,67 +94,82 @@
           <img
             src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_01_green.jpg"
             alt="avatar"
-          />
+          /> 
+          <!-- id="receiver_name" -->
           <div class="chat-about">
-            <div class="chat-with" id="receiver_name"></div>
+            <div class="chat-with"><%=receiver.name %></div>
             <div class="status"><i class="fa fa-circle online"></i> online</div>
           </div>
           <i class="fa-solid fa-ellipsis-vertical options"></i>
         </div>
         <!-- end chat-header -->
 
-        <div class="chat-history">
+        <div class="chat-history" id="chat-history">
           <ul id="messages">
-            <!-- <li class="clearfix">
+            <% if(chats.length>0) {%> <% for(var i=0; i < chats.length; i++) {%>
+            <%if(user._id == chats[i].sender._id) {%>
+            <li class="clearfix">
               <div class="message-data align-right">
-                <span class="message-data-time">10:10 AM, Today</span> &nbsp;
-                &nbsp; <span class="message-data-name">Olia</span>
+                <span class="message-data-time"><%= moment(chats[i].createdAt).calendar() %></span> &nbsp;
+                &nbsp;
+                <span class="message-data-name"
+                  ><%=chats[i].sender.name %></span
+                >
                 <i class="fa fa-circle me"></i>
               </div>
               <div class="message other-message float-right">
-                Hi Vincent, how are you? How is the project coming along?
+                <%=chats[i].message%>
               </div>
-            </li> -->
-
-            <!-- <li>
+            </li>
+            <%} if(user._id == chats[i].receiver._id){%>
+            <li>
               <div class="message-data">
                 <span class="message-data-name"
-                  ><i class="fa fa-circle online"></i> Vincent</span
+                  ><i class="fa fa-circle online"></i> <%=chats[i].sender.name
+                  %></span
                 >
-                <span class="message-data-time">10:12 AM, Today</span>
+                <span class="message-data-time"><%= moment(chats[i].createdAt).calendar() %></span>
               </div>
-              <div class="message my-message">
-                Are we meeting today? Project has been already finished and I
-                have results to show you.
-              </div>
-            </li> -->
-           
-           
+              <div class="message my-message"><%=chats[i].message%></div>
+            </li>
+            <% } %> <% }%> <% } %>
           </ul>
-           <script id="message-template" type="text/template">
-                <li class="clearfix">
-                    <div class="message-data align-right">
-                      <span class="message-data-time">10:10 AM, Today</span> &nbsp;
-                      &nbsp; <span class="message-data-name">{{ sender }}</span>
-                      <i class="fa fa-circle me"></i>
-                    </div>
-                    <div class="message other-message float-right">
-                     {{ text }}
-                    </div>
-                  </li>
-            </script>
+          <script id="message-template" type="text/template">
+          
+            <li class="clearfix">
+                <div class="message-data align-right">
+                  <span class="message-data-time">Just Now</span> &nbsp;
+                  &nbsp; <span class="message-data-name">{{ sender }}</span>
+                  <i class="fa fa-circle me"></i>
+                </div>
+                <div class="message other-message float-right">
+                 {{ text }}
+                </div>
+              </li>
+          </script>
         </div>
         <!-- end chat-history -->
 
         <div class="chat-message clearfix">
-          <form id="message_form" method="post">
+          <form id="message_form" action="/search" method="post">
             <textarea
               name="message"
               id="message"
               placeholder="Type your message"
               rows="3"
             ></textarea>
-            <input type="hidden" name="username" id="user_name" value="<%= user.name %>">
+            <input
+              type="hidden"
+              name="username"
+              id="user_name"
+              value="<%= user.name %>"
+            />
+            <input
+            type="hidden"
+            name="userid"
+            id="user_id"
+            value="<%= user._id %>"
+          />
             <button type="submit" id="send_message">
               <i class="fa-solid fa-paper-plane"></i>
             </button>
@@ -165,6 +180,7 @@
     </div>
 
     <!-- end container -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
     <script
       src="https://code.jquery.com/jquery-3.6.0.min.js"
@@ -172,18 +188,19 @@
       crossorigin="anonymous"
     ></script>
     <script
-      src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
-      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.2/bootstrap3-typeahead.js"
+      integrity="sha512-P2Z/b+j031xZuS/nr8Re8dMwx6pNIexgJ7YqcFWKIqCdbjynk4kuX/GrqpQWEcI94PRCyfbUQrjRcWMi7btb0g=="
       crossorigin="anonymous"
+      referrerpolicy="no-referrer"
     ></script>
     <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
-      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      src="https://cdn.socket.io/4.4.1/socket.io.min.js"
+      integrity="sha384-fKnu0iswBIqkjxrhQCTZ7qlLHOFEgNkRmK2vaO/LbTZSXdJfAu6ewRBdwHPhBo/H"
       crossorigin="anonymous"
     ></script>
-    <script src="https://cdn.socket.io/4.4.1/socket.io.min.js" integrity="sha384-fKnu0iswBIqkjxrhQCTZ7qlLHOFEgNkRmK2vaO/LbTZSXdJfAu6ewRBdwHPhBo/H" crossorigin="anonymous"></script>
+
     <script src="/deparam.js"></script>
     <script src="/privatechat.js"></script>
-    
+    <script src="/ajaxSubmit.js"></script>
   </body>
 </html>
