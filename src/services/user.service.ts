@@ -5,10 +5,7 @@ import { FilterQuery } from "mongoose";
 import User, { UserDocument } from "../models/user.model";
 
 export async function createUser(input: DocumentDefinition<UserDocument>) {
-   
         return await User.create(input);
-
-   
 }
 
 export async function validatePassword({ email, password, }: { email: UserDocument["email"], password: string }) {

@@ -25,22 +25,22 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.0.0/mustache.min.js
-"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.0.0/mustache.min.js"></script> -->
     <link rel="stylesheet" href="/home.css" />
+    <link rel="stylesheet" href="/profileColor.css" />
     <link rel="stylesheet" href="/table.css" />
     <link rel="stylesheet" href="/searchresult.css" />
   </head>
   <body>
-    <%-include("include/request.ejs",{user:user}) %>
+    <%-include("include/request.ejs",{friends:friends}) %>
     <%-include("include/search.ejs") %>
     <%-include("include/contactInfo.ejs",{receiver:receiver}) %>
     <%-include("include/profile.ejs",{user:user}) %>
     <div class="main-container clearfix">
       <div class="chat-list">
         <div class="user-container">
-          <div class="profile">
-            <h2 class="profile-tag"><%= user.name.charAt(0)%></h2>
+          <div class="profile profile-<%=user.profileNum %>">
+            <h2 class="profile-tag"><%= user.username.substring(0,2)%></h2>
           </div>
           <div class="user-about">
             <div class="user-name"><%= user.name%></div>
@@ -60,7 +60,12 @@
                 class="dropdown-menu dropdown-menu-end dropdown-menu-lg-end"
                 aria-labelledby="dropdownMenu2"
               >
-                <li><a class="dropdown-item" href="/chat">Start chat</a></li>
+                <li><a data-bs-toggle="modal"
+                  data-bs-target="#searchModal"
+                  class="dropdown-item"
+                  href="#searchModal"
+                  role="button"
+                  aria-controls="searchModal">Start chat</a></li>
                 <li>
                   <a
                     class="dropdown-item"
@@ -97,22 +102,22 @@
               id="search"
               name="search"
               value="Search User"
-              alt="Add to Cart"
+              alt="Search User"
               data-bs-toggle="modal"
-              data-bs-target="#staticBackdrop"
+              data-bs-target="#searchModal"
             />
           </div>
           <ul class="list">
-            <% for(var i=0; i < users.length; i++) { %>
-
+            <% for(var i=0; i < friends.length; i++) { %>
+              <% if(friends[i].status==3) {%> 
             <li class="clearfix people-list-header">
-              <div class="profile">
-                <h2 class="profile-tag"><%= users[i].name.charAt(0)%></h2>
+              <div class="profile profile-<%=friends[i].profileNum %>">
+                <h2 class="profile-tag"><%=friends[i].username.substring(0,2)%></h2>
               </div>
               <div class="about">
                 <div class="name">
-                  <a href="/chat/<%=users[i]._id%>-<%=user._id%>"
-                    ><%= users[i].name %></a
+                  <a href="/chat/<%=friends[i]._id%>-<%=user._id%>"
+                    >@<%= friends[i].username %></a
                   >
                 </div>
                 <div class="status">
@@ -120,6 +125,7 @@
                 </div>
               </div>
             </li>
+            <% } %> 
             <%}%>
           </ul>
         </div>
@@ -127,13 +133,14 @@
 
       <div class="chat">
         <div class="chat-header people-list-header  clearfix ">
-          <div class="profile">
-            <h2 class="profile-tag"><%= receiver.name.charAt(0)%></h2>
+          <div class="profile profile-<%=receiver.profileNum %>">
+            <h2 class="profile-tag"><%= receiver.username.substring(0,2)%></h2>
           </div>
           <!-- id="receiver_name" -->
           <div class="chat-about">
-            <div class="chat-with"><%=receiver.name %></div>
-            <div class="status"><i class="fa fa-circle online"></i> online</div>
+          
+            <div class="chat-with">@<%=receiver.username %></div>
+            <div class="status"><i class="fa fa-circle online"></i> online</div></a>
           </div>
           <div class="dropdown chat-header-setting">
             <i
@@ -168,43 +175,49 @@
 
         <div class="chat-history" id="chat-history">
           <ul id="messages">
-            <% if(chats.length>0) {%> <% for(var i=0; i < chats.length; i++) {%>
-            <%if(user._id == chats[i].sender._id) {%>
-            <li class="clearfix">
-              <div class="message-data align-right">
-                <span class="message-data-time"
-                  ><%= moment(chats[i].createdAt).calendar() %></span
-                >
-                &nbsp; &nbsp;
-                <span class="message-data-name"
-                  ><%=chats[i].sender.name %></span
-                >
-                <i class="fa fa-circle me"></i>
-              </div>
-              <div class="message other-message float-right">
-                <%=chats[i].message%>
-              </div>
-            </li>
-            <%} if(user._id == chats[i].receiver._id){%>
-            <li>
-              <div class="message-data">
-                <span class="message-data-name"
-                  ><i class="fa fa-circle online"></i> <%=chats[i].sender.name
-                  %></span
-                >
-                <span class="message-data-time"
-                  ><%= moment(chats[i].createdAt).calendar() %></span
-                >
-              </div>
-              <div class="message my-message"><%=chats[i].message%></div>
-            </li>
-            <% } %> <% }%> <% } %>
+            <% if(chats.length>0) {%>
+               <%  chats.forEach( chat => { %> 
+                  <% if(user._id==chat.sender._id) {%> 
+                    <li class="clearfix">
+                      <div class="message-data align-right">
+        
+                        <span class="message-data-time"
+                          ><%= moment(chat.createdAt).calendar() %></span
+                        >
+                        &nbsp; &nbsp;
+                        <span class="message-data-name"
+                          ><%=chat.sender.name %></span
+                        >
+                        <i class="fa fa-circle me"></i>
+                      </div>
+                      <div class="message other-message float-right">
+                        <%=chat.message%>
+                      </div>
+                    </li>
+                    <% } if(user._id==chat.receiver._id) { %> 
+                      <li>
+                        <div class="message-data">
+                          <span class="message-data-name"
+                            ><i class="fa fa-circle online"></i> <%=chat.sender.name
+                            %></span
+                          >
+                          <span class="message-data-time"
+                            ><%= moment(chat.createdAt).calendar() %></span
+                          >
+                        </div>
+                        <div class="message my-message"><%=chat.message%></div>
+                      </li>
+                      <% } %> 
+                      
+                      <% }) %>
+            <% }%> 
+           
           </ul>
         </div>
         <!-- end chat-history -->
 
         <div class="chat-message clearfix">
-          <form id="message_form" action="/search" method="post">
+          <form id="message_form" method="post">
             <textarea
               name="message"
               id="message"
@@ -256,9 +269,9 @@
       integrity="sha384-fKnu0iswBIqkjxrhQCTZ7qlLHOFEgNkRmK2vaO/LbTZSXdJfAu6ewRBdwHPhBo/H"
       crossorigin="anonymous"
     ></script>
-
+<script src="/ajaxSubmit.js"></script>
     <script src="/deparam.js"></script>
     <script src="/privatechat.js"></script>
-    <script src="/ajaxSubmit.js"></script>
+    
   </body>
 </html>

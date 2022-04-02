@@ -2,9 +2,18 @@ import {Request,Response} from 'express';
 import { omit } from 'lodash';
 import {createUser} from '../services/user.service';
 import log from '../logger';
+import mongoose from 'mongoose';
+import User from '../models/user.model';
 export async function createUserHandler(req:Request,res:Response) {
+    const  olduser= await User.find({ "$or": [{"email":req.body.email}, { "username": { $regex: req.body.username, $options: 'i' } }] }) as any;
+       
+    if(olduser && olduser.length >0){
+        req.flash("uniError","username or email already exits");
+         return res.redirect("back");
+    }
     try{
-        const user = await createUser(req.body);
+      
+       const user = await createUser(req.body);
         return res.render("login.ejs",{success:"account successfully created"});
 
     }catch(e:any){

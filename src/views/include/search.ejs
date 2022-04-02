@@ -1,16 +1,16 @@
 <div
   class="modal fade"
-  id="staticBackdrop"
+  id="searchModal"
   data-bs-backdrop="static"
   data-bs-keyboard="false"
   tabindex="-1"
-  aria-labelledby="staticBackdropLabel"
+  aria-labelledby="searchModalLabel"
   aria-hidden="true"
 >
   <div class="modal-dialog modal-xl">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel">Search user</h5>
+        <h5 class="modal-title" id="searchModalLabel">Search user</h5>
         <button
           type="button"
           class="btn-close"
@@ -32,6 +32,7 @@
               aria-label="search user"
               aria-describedby="basic-addon"
             />
+            <input type="hidden" name="receiverId" id="receiverId">
             <input
               type="submit"
               value="submit"

@@ -25,19 +25,20 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
+    <link rel="stylesheet" href="/profileColor.css" />
     <link rel="stylesheet" href="/home.css" />
     <link rel="stylesheet" href="/table.css" />
     <link rel="stylesheet" href="/searchresult.css" />
   </head>
   <body>
-    <%-include("include/request.ejs",{user:user}) %>
+    <%-include("include/request.ejs",{friends:friends}) %>
     <%-include("include/search.ejs") %>
     <%-include("include/profile.ejs",{user:user}) %>
     <div class="main-container clearfix">
       <div class="chat-list">
         <div class="user-container">
-          <div class="profile">
-            <h2 class="profile-tag"><%= user.name.charAt(0)%></h2>
+          <div class="profile profile-<%=user.profileNum %>">
+            <h2 class="profile-tag"><%= user.username.substring(0,2)%></h2>
           </div>
 
           <div class="user-about">
@@ -58,7 +59,17 @@
                 class="dropdown-menu dropdown-menu-end dropdown-menu-lg-end"
                 aria-labelledby="dropdownMenu2"
               >
-                <li><a class="dropdown-item" href="/chat">Start chat</a></li>
+                <li>
+                  <a
+                    data-bs-toggle="modal"
+                    data-bs-target="#searchModal"
+                    class="dropdown-item"
+                    href="#searchModal"
+                    role="button"
+                    aria-controls="searchModal"
+                    >Start chat</a
+                  >
+                </li>
                 <li>
                   <a
                     class="dropdown-item"
@@ -96,21 +107,24 @@
               id="search"
               name="search"
               value="Search User"
-              alt="Add to Cart"
+              alt="Search user"
               data-bs-toggle="modal"
-              data-bs-target="#staticBackdrop"
+              data-bs-target="#searchModal"
             />
           </div>
           <ul class="list">
-            <% for(var i=0; i < users.length; i++) { %>
+            <% for(var i=0; i < friends.length; i++) { %> <%
+            if(friends[i].status==3) {%>
             <li class="clearfix people-list-header">
-              <div class="profile">
-                <h2 class="profile-tag"><%= users[i].name.charAt(0)%></h2>
+              <div class="profile profile-<%=friends[i].profileNum %>">
+                <h2 class="profile-tag">
+                  <%=friends[i].username.substring(0,2)%>
+                </h2>
               </div>
               <div class="about">
                 <div class="name">
-                  <a href="/chat/<%=users[i]._id%>-<%=user._id%>"
-                    ><%= users[i].name %></a
+                  <a href="/chat/<%=friends[i]._id%>-<%=user._id%>"
+                    >@<%= friends[i].username %></a
                   >
                 </div>
                 <div class="status">
@@ -118,7 +132,7 @@
                 </div>
               </div>
             </li>
-            <%}%>
+            <% } %> <%}%>
           </ul>
         </div>
       </div>
