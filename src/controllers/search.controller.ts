@@ -27,7 +27,7 @@ export async function getsearchResultHandler(req: Request, res: Response) {
     var users = await User.find() as any;
     const user = req.session.user as any;
     const receiverId=req.body.receiverId as any;
-console.log(req.body.receiverId);
+    
     if (username && (user.username !== username)) {
 
         const friends = await User.aggregate([

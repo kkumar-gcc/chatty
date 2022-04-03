@@ -1,4 +1,5 @@
 $(document).ready(function () {
+ 
   $("input.typeahead").typeahead({
     header: "Your Events",
     source: function (query, process) {

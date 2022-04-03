@@ -141,14 +141,17 @@ ul {
     left: 50%;
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
-	border-radius: 20px;
+	border-radius: 30px;
 	opacity: 0.4;
-  padding:auto;
-	width: 250px;
+	width: 350px;
 	color:  white;
+  display:flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
 }
 .chat .start-chat-message p{
-	text-align: center;
+margin-top:10px;
 }
 .chat .chat-header {
   padding: 10px 30px;

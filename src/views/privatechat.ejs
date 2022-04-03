@@ -43,8 +43,9 @@
             <h2 class="profile-tag"><%= user.username.substring(0,2)%></h2>
           </div>
           <div class="user-about">
-            <div class="user-name"><%= user.name%></div>
-            <div class="status"><i class="fa fa-circle online"></i> online</div>
+            <div class="user-name"><%= user.name%> @<%= user.username %></div>
+           
+            <!-- <div class="status"><i class="fa fa-circle online"></i> online</div> -->
           </div>
           <div class="setting">
             <div class="dropdown">
@@ -120,9 +121,9 @@
                     >@<%= friends[i].username %></a
                   >
                 </div>
-                <div class="status">
+                <!-- <div class="status">
                   <i class="fa fa-circle online"></i> online
-                </div>
+                </div> -->
               </div>
             </li>
             <% } %> 
@@ -140,7 +141,7 @@
           <div class="chat-about">
           
             <div class="chat-with">@<%=receiver.username %></div>
-            <div class="status"><i class="fa fa-circle online"></i> online</div></a>
+            <!-- <div class="status"><i class="fa fa-circle online"></i> online</div></a> -->
           </div>
           <div class="dropdown chat-header-setting">
             <i

@@ -9,13 +9,13 @@ export interface UserDocument extends mongoose.Document {
     name: string;
     username: string;
     friend: Array<object>;
+    description:string;
     profileNum:number;
     password: string;
     createdAt: Date;
     updateAt: Date;
     comparePassword(candidatePassword: String): Promise<boolean>;
 }
-
 
 const UserSchema = new mongoose.Schema(
     {
@@ -39,6 +39,7 @@ const UserSchema = new mongoose.Schema(
                 }
             }
         ],
+        description:{type: String,default:"i love this App"},
         name: { type: String, required: true },
         password: { type: String, required: true },
         profileNum:{type:Number,default:1},

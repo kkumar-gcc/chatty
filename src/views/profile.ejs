@@ -35,10 +35,9 @@
                 </h2>
               </div>
               <div class="user-about">
-                <div class="user-name">
-                  <%= user.name%> @<%= user.username %>
-                </div>
-                <div class="status"><i class="fa fa-circle online"></i> online</div>
+                <div class="user-name"><%= user.name%> @<%= user.username %></div>
+           
+                <!-- <div class="status"><i class="fa fa-circle online"></i> online</div> -->
               </div>
               <div class="setting">
                 <div class="dropdown">
@@ -89,9 +88,9 @@
                           <div class="name">
                             <a href="/chat/<%=friends[i]._id%>-<%=user._id%>">@<%= friends[i].username %></a>
                           </div>
-                          <div class="status">
+                          <!-- <div class="status">
                             <i class="fa fa-circle online"></i> online
-                          </div>
+                          </div> -->
                         </div>
                       </li>
                       <% } %>
@@ -102,62 +101,75 @@
           </div>
 
           <div class="chat">
-
+        <div class="search-profile">
+          
             <% if(searchUsers.length> 0) {%>
               <% for(var i=0;i<searchUsers.length;i++){ %>
-
-                <h1>
-                  <%= searchUsers[i].name %>
-                </h1>
-                <ul>
-                  <li>@<%= searchUsers[i].username %>
-                  </li>
-                  <li>
-                    <%= searchUsers[i].email %>
-                  </li>
-                  <li>
-                    <!-- userStatus -->
-                    <% if(userStatus) {%> 
-                    <% if(userStatus.status==3) {%> 
-                      <a href="/chat/<%=userStatus._id %>-<%=user._id %>  ">Message</a>
-                      <% } else if(userStatus.status==1){%> 
-                        <h5><span class="badge badge-secondary text-secondary bg-light">Requested</span></h5>
-                 
-                        <% } else if(userStatus.status==2){%> 
-                          <span  style="float:left;">
-                            <form action="/user/requestAccept" method="post">
-                              <input type="hidden" name="action" value="Accept">
-                              <input type="hidden" name="recipientId" value="<%=friends[i]._id%>">
-                              <input class="defaultBtn confirm" role="button" type="submit" value="Confirm">
-        
-                            </form>
-                          </span>
-        
-                          <span  style="float:right;">
-                            <form action="/user/requestAccept" method="post">
-                              <input type="hidden" name="action" value="Decline">
-                              <input type="hidden" name="recipientId" value="<%=friends[i]._id%>">
-                              <input class="defaultBtn" role="button" type="submit" value="Not Now">
-                            </form>
-                          </span>
-                          <% } else if(userStatus.status==4){%> 
-                            <h5><span class="badge badge-danger  bg-danger">Declined</span></h5>
-                 
-                            <% } %>
-                            <% }else{%> 
-                    <form action="/user/request" method="post">
-                      <input type="hidden" name="recipientId" value="<%= searchUsers[i]._id %>">
-                      <button type="submit">send request</button>
-                    </form>
+                <div class="profile-card">
+                  <div class="img">
+                    <div class="profile2  profile-<%=searchUsers[i].profileNum %>">
+                      <h2 class="profile-tag2"><%= searchUsers[i].username.substring(0,2).toUpperCase()%></h2>
+                    </div>
+                  </div>
+                  <div class="infos">
+                    <div class="name">
+                      <h2>@<%= searchUsers[i].username %> </h2>
+                      <h4><%= searchUsers[i].name %></h4>
+                    </div>
+                    <% if(searchUsers[i].description) {%> 
+                    <p class="text">
+                   <%= searchUsers[i].description%> 
+                    </p>
                     <% } %> 
-                  </li>
-                </ul>
+                   
+                    <div class="links">
+                      <% if(userStatus) {%> 
+                        <% if(userStatus.status==3) {%> 
+                          <a href="/chat/<%=userStatus._id %>-<%=user._id %>  " class="btn follow" role="bu">Message</a>
+                         
+                          <button class="btn view ">View Profile</button>
+                          <% } else if(userStatus.status==1){%> 
+                            <h5><span class="badge badge-secondary text-light bg-secondary">Requested</span></h5>
+                     
+                            <% } else if(userStatus.status==2){%> 
+                              <span  style="float:left;">
+                                <form action="/user/requestAccept" method="post">
+                                  <input type="hidden" name="action" value="Accept">
+                                  <input type="hidden" name="recipientId" value="<%=friends[i]._id%>">
+                                  <input class="defaultBtn confirm profile-card__button button--blue js-message-btn" role="button" type="submit" value="Confirm">
+                                
+                                </form>
+                              </span>
+            
+                              <span>
+                                <form action="/user/requestAccept" method="post">
+                                  <input type="hidden" name="action" value="Decline">
+                                  <input type="hidden" name="recipientId" value="<%=friends[i]._id%>">
+                                  <input class="defaultBtn " role="button" type="submit" value="Not Now">
+                                </form>
+                              </span>
+                              <% } else if(userStatus.status==4){%> 
+                                    <h5>
+                                      <span class="badge badge-danger  bg-danger">Declined</span>
+                                    </h5>
+                                <% } %>
+                                <% } else {%> 
+                                      <form action="/user/request" method="post">
+                                        <input type="hidden" name="recipientId" value="<%= searchUsers[i]._id %>">
+                                        <button type="submit" class="btn view">send request</button>
+                                      </form>
+                        <% } %> 
+                     
+                    
+                    </div>
+                  </div>
+                </div>
                 <% } %>
                   <%} else {%>
                     <p>user not found</p>
                     <%}%>
-
           </div>
+        </div>
           <!-- end chat -->
         </div>
 
@@ -177,3 +189,4 @@
 </body>
 
 </html>
+

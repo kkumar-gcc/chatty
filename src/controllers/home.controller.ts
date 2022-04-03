@@ -49,7 +49,6 @@ export async function getHomeHandler(req: Request, res: Response) {
         }
     ], (err: any, results: any) => {
         const friends = results[0];
-        // log.info(friends);
         return res.render("home.ejs", { user:user,friends:friends, users: users });
     })
 }
