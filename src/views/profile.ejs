@@ -16,33 +16,40 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
     integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="/profileColor.css" />
   <link rel="stylesheet" href="/home.css" />
   <link rel="stylesheet" href="/table.css" />
   <link rel="stylesheet" href="/searchresult.css" />
 </head>
 
 <body>
-  <%-include("include/request.ejs",{user:user}) %>
+  <%-include("include/request.ejs",{friends:friends}) %>
     <%-include("include/search.ejs") %>
       <%-include("include/profile.ejs",{user:user}) %>
         <div class="main-container clearfix">
           <div class="chat-list">
             <div class="user-container">
-              <div class="profile">
-                <h2 class="profile-tag"><%= user.name.charAt(0)%></h2>
+              <div class="profile profile-<%=user.profileNum %>">
+                <h2 class="profile-tag">
+                  <%= user.username.substring(0,2)%>
+                </h2>
               </div>
-               <div class="user-about">
-                <div class="user-name">
-                  <%= user.name%> @<%= user.username %>
-                </div>
-                <div class="status"><i class="fa fa-circle online"></i> online</div>
+              <div class="user-about">
+                <div class="user-name"><%= user.name%> @<%= user.username %></div>
+           
+                <!-- <div class="status"><i class="fa fa-circle online"></i> online</div> -->
               </div>
               <div class="setting">
                 <div class="dropdown">
                   <i class="fa-solid fa-ellipsis-vertical options" class="btn btn-secondary dropdown-toggle"
                     type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false"></i>
                   <ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg-end" aria-labelledby="dropdownMenu2">
-                    <li><a class="dropdown-item" href="/chat">Start chat</a></li>
+                    <li><a  data-bs-toggle="modal"
+                      data-bs-target="#searchModal"
+                      class="dropdown-item"
+                      href="#searchModal"
+                      role="button"
+                      aria-controls="searchModal">Start chat</a></li>
                     <li>
                       <a class="dropdown-item" data-bs-toggle="offcanvas" href="#offcanvasProfile" role="button"
                         aria-controls="offcanvasRequest">
@@ -65,58 +72,104 @@
             <div class="people-list" id="people-list">
               <div class="search">
                 <input type="text" id="search" name="search" value="Search User" alt="Add to Cart"
-                  data-bs-toggle="modal" data-bs-target="#staticBackdrop" />
+                  data-bs-toggle="modal" data-bs-target="#searchModal" />
               </div>
               <ul class="list">
-                <% for(var i=0; i < users.length; i++) { %>
-
-                  <li class="clearfix people-list-header">
-                    <div class="profile">
-                      <h2 class="profile-tag"><%= users[i].name.charAt(0)%></h2>
-                    </div>
-                    <div class="about">
-                      <div class="name">
-                        <a href="/chat/<%=users[i]._id%>-<%=user._id%>">
-                          <%= users[i].name %>
-                        </a>
-                      </div>
-                      <div class="status">
-                        <i class="fa fa-circle online"></i> online
-                      </div>
-                    </div>
-                  </li>
-                  <%}%>
+                <% if(friends.length>0) {%>
+                  <% for(var i=0; i < friends.length; i++) { %>
+                    <% if(friends[i].status==3) {%>
+                      <li class="clearfix people-list-header">
+                        <div class="profile profile-<%=friends[i].profileNum %>">
+                          <h2 class="profile-tag">
+                            <%=friends[i].username.substring(0,2)%>
+                          </h2>
+                        </div>
+                        <div class="about">
+                          <div class="name">
+                            <a href="/chat/<%=friends[i]._id%>-<%=user._id%>">@<%= friends[i].username %></a>
+                          </div>
+                          <!-- <div class="status">
+                            <i class="fa fa-circle online"></i> online
+                          </div> -->
+                        </div>
+                      </li>
+                      <% } %>
+                        <%}%>
+                          <% } %>
               </ul>
             </div>
           </div>
 
           <div class="chat">
-
+        <div class="search-profile">
+          
             <% if(searchUsers.length> 0) {%>
               <% for(var i=0;i<searchUsers.length;i++){ %>
-
-                <h1>
-                  <%= searchUsers[i].name %>
-                </h1>
-                <ul>
-                  <li>@<%= searchUsers[i].username %>
-                  </li>
-                  <li>
-                    <%= searchUsers[i].email %>
-                  </li>
-                  <li>
-                    <form action="/user/request" method="post">
-                      <input type="hidden" name="recipientId" value="<%= searchUsers[i]._id %>">
-                      <button type="submit">send request</button>
-                    </form>
-                  </li>
-                </ul>
+                <div class="profile-card">
+                  <div class="img">
+                    <div class="profile2  profile-<%=searchUsers[i].profileNum %>">
+                      <h2 class="profile-tag2"><%= searchUsers[i].username.substring(0,2).toUpperCase()%></h2>
+                    </div>
+                  </div>
+                  <div class="infos">
+                    <div class="name">
+                      <h2>@<%= searchUsers[i].username %> </h2>
+                      <h4><%= searchUsers[i].name %></h4>
+                    </div>
+                    <% if(searchUsers[i].description) {%> 
+                    <p class="text">
+                   <%= searchUsers[i].description%> 
+                    </p>
+                    <% } %> 
+                   
+                    <div class="links">
+                      <% if(userStatus) {%> 
+                        <% if(userStatus.status==3) {%> 
+                          <a href="/chat/<%=userStatus._id %>-<%=user._id %>  " class="btn follow" role="bu">Message</a>
+                         
+                          <button class="btn view ">View Profile</button>
+                          <% } else if(userStatus.status==1){%> 
+                            <h5><span class="badge badge-secondary text-light bg-secondary">Requested</span></h5>
+                     
+                            <% } else if(userStatus.status==2){%> 
+                              <span  style="float:left;">
+                                <form action="/user/requestAccept" method="post">
+                                  <input type="hidden" name="action" value="Accept">
+                                  <input type="hidden" name="recipientId" value="<%=friends[i]._id%>">
+                                  <input class="defaultBtn confirm profile-card__button button--blue js-message-btn" role="button" type="submit" value="Confirm">
+                                
+                                </form>
+                              </span>
+            
+                              <span>
+                                <form action="/user/requestAccept" method="post">
+                                  <input type="hidden" name="action" value="Decline">
+                                  <input type="hidden" name="recipientId" value="<%=friends[i]._id%>">
+                                  <input class="defaultBtn " role="button" type="submit" value="Not Now">
+                                </form>
+                              </span>
+                              <% } else if(userStatus.status==4){%> 
+                                    <h5>
+                                      <span class="badge badge-danger  bg-danger">Declined</span>
+                                    </h5>
+                                <% } %>
+                                <% } else {%> 
+                                      <form action="/user/request" method="post">
+                                        <input type="hidden" name="recipientId" value="<%= searchUsers[i]._id %>">
+                                        <button type="submit" class="btn view">send request</button>
+                                      </form>
+                        <% } %> 
+                     
+                    
+                    </div>
+                  </div>
+                </div>
                 <% } %>
                   <%} else {%>
                     <p>user not found</p>
                     <%}%>
-
           </div>
+        </div>
           <!-- end chat -->
         </div>
 
@@ -136,3 +189,4 @@
 </body>
 
 </html>
+

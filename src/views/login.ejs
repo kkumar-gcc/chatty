@@ -34,30 +34,48 @@
             <div class="imgBx"><img src="https://raw.githubusercontent.com/WoojinFive/CSS_Playground/master/Responsive%20Login%20and%20Registration%20Form/img1.jpg" alt="" /></div>
             <div class="formBx">
               <form action="/login" method="post" >
+               
                 <% if(locals.msg) { %>
-                  <div class="alert alert-success d-flex align-items-center" role="alert">
-                    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
-                    <div>
-                         <%=msg%> 
+                  <div class="toast show position-fixed top-0 end-0 mt-2 mr-2" role="alert" aria-live="assertive" aria-atomic="true" style="z-index: 110000">
+                    <div class="toast-header">
+                      <strong class="me-auto"></strong>
+                      <small></small>
+                      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                    <div class="toast-body">
+                      <span class="text-success">  <%=msg%> </span>
                     </div>
                   </div>
+                
                 <%}%>
+             
                 <% if(messages.success) { %>
-                  <div class="alert alert-success d-flex align-items-center" role="alert">
-                    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
-                    <div>
-                         <%=messages.success%> 
+                  <div class="toast show position-fixed top-0 end-0 mt-2 mr-2" role="alert" aria-live="assertive" aria-atomic="true" style="z-index: 110000">
+                    <div class="toast-header">
+                      <strong class="me-auto"></strong>
+                      <small></small>
+                      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                    <div class="toast-body">
+                      <span class="text-success"> <%=messages.success%></span>
                     </div>
                   </div>
+                
                 <%}%>
                 <% if(messages.error) { %>
-                  <div class="alert alert-danger d-flex align-items-center" role="alert">
-                    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
-                    <div>
-                         <%=messages.error%> 
+                  <div class="toast show position-fixed top-0 end-0 mt-2 mr-2" role="alert" aria-live="assertive" aria-atomic="true" style="z-index: 110000">
+                    <div class="toast-header">
+                      <strong class="me-auto"></strong>
+                      <small></small>
+                      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                    <div class="toast-body">
+                      <span class="text-danger"> <%=messages.error%></span>
                     </div>
                   </div>
+                
                 <%}%>
+              
   
                 <h2>Sign In</h2>
                 <input type="email" placeholder="Email " name="email" id="email">

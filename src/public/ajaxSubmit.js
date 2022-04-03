@@ -1,4 +1,5 @@
 $(document).ready(function () {
+ 
   $("input.typeahead").typeahead({
     header: "Your Events",
     source: function (query, process) {
@@ -8,15 +9,15 @@ $(document).ready(function () {
           query: query,
         },
         function (data) {
-          // console.log(data);
           process(data);
         }
       );
     },
     displayText: function (item) {
+      console.log(item.profileNum);
       return ` <div class="ProfileCard u-cf typeahead-menu typeahead-suggestion typeahead-selectable">
-       <div class="profile">
-        <h2 class="profile-tag">${item.name.charAt(0)}</h2>
+       <div class="profile profile-${item.profileNum}">
+        <h3 class="profile-tag">${item.username.substring(0, 2)}</h3>
        </div>
       <div class="ProfileCard-details">
       <div class="ProfileCard-realName">${item.name}</div>
@@ -40,6 +41,7 @@ $(document).ready(function () {
     },
     afterSelect: function (item) {
       this.$element[0].value = item.username;
+      $("#receiverId").val(item._id);
       console.log(item.username);
       $("#form_search").submit();
     },

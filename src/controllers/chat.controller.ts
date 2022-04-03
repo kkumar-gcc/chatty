@@ -4,12 +4,13 @@ import async from 'async';
 import moment from 'moment';
 import User from '../models/user.model';
 import Message from '../models/message.model';
+import mongoose from 'mongoose';
 export async function getChatHandler(req: Request, res: Response) {
     var users = await User.find() as any;
     return res.render("privatechat.ejs", { users: users, user: req.session.user });
 }
 export async function getRoomHandler(req: Request, res: Response) {
-    var users = await User.find() as any;
+    // var users = await User.find() as any;
 
     const user = req.session.user as any;
 
@@ -52,15 +53,49 @@ export async function getRoomHandler(req: Request, res: Response) {
                     { "$and": [{ "receiver": Object(user._id) }, { "sender": Object(receiverId) }] }
                 ]
             })
-                .populate('sender', "-password")
-                .populate('receiver', "-password")
+                .populate('sender', ["-password","-friends"])
+                .populate('receiver',["-password","-friends"])
                 .exec((err, result3) => {
                     callback(err, result3);
                 })
+        },
+        async function (callback: any) {
+            await User.aggregate([
+                {
+                    "$match": { _id: new mongoose.Types.ObjectId(user._id)}
+                },
+                {
+                    "$unwind": "$friends"
+                },
+                {
+                    "$lookup": {
+                        "from": User.collection.name,
+                        "localField": "friends.user",
+                        "foreignField": "_id",
+                        "as": "friendUser"
+                    }
+                },
+                {
+                    "$unwind": "$friendUser"
+                },
+                {
+                    "$project": {
+                        "_id":  "$friends.user",
+                        "username": "$friendUser.username",
+                        "email": "$friendUser.email",
+                        "name":"$friendUser.name",
+                        "profileNum":"$friendUser.profileNum",
+                        "status": "$friends.status"
+                    }
+                }
+            ], function (err: any, newResult: any) {
+                callback(err, newResult);
+            })
         }
     ], (err: any, results: any) => {
         const result = results[1];
-        // log.info(result);
-        return res.render("privatechat.ejs", { users: users, user: req.session.user, chats: result, moment: moment, receiver: receiver });
+        const result2 = results[2];
+    //    log.info(result);
+        return res.render("privatechat.ejs", { user: user,friends:result2, chats: result, moment: moment, receiver: receiver });
     })
 }

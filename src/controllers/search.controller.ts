@@ -4,16 +4,17 @@ import { createUser } from '../services/user.service';
 import log from '../logger';
 import User from '../models/user.model';
 import async from 'async';
+import mongoose from 'mongoose';
 export async function searchResultHandler(req: Request, res: Response) {
     const username = req.query.query as any;
-
+    const user = req.session.user as any;
     const results = [] as any;
 
     try {
-        const users = await User.find({ username: { $regex: username, $options: 'i' } }).limit(10);
+        const users = await User.find({ "$and": [{ _id: { $ne: user._id } }, { "username": { $regex: username, $options: 'i' } }] }).limit(10);
         users.forEach(user => {
-            let { _id, username, name } = user;
-            results.push({ _id: _id, username: username, name: name });
+            let { _id, username, name,profileNum } = user;
+            results.push({ _id: _id, username: username, name: name,profileNum:profileNum });
         });
     } catch (err) {
         console.log(err);
@@ -24,10 +25,46 @@ export async function searchResultHandler(req: Request, res: Response) {
 export async function getsearchResultHandler(req: Request, res: Response) {
     const username = req.body.query as any;
     var users = await User.find() as any;
-    if (username) {
-        const searchUsers = await User.find({ "username": username });
-        return res.render("profile.ejs", { users: users, user: req.session.user, searchUsers: searchUsers });
+    const user = req.session.user as any;
+    const receiverId=req.body.receiverId as any;
+    
+    if (username && (user.username !== username)) {
 
+        const friends = await User.aggregate([
+            {
+                "$match": { _id: new mongoose.Types.ObjectId(user._id)}
+            },
+            {
+                "$unwind": "$friends"
+            },
+            {
+                "$lookup": {
+                    "from": User.collection.name,
+                    "localField": "friends.user",
+                    "foreignField": "_id",
+                    "as": "friendUser"
+                }
+            },
+            {
+                "$unwind": "$friendUser"
+            },
+            {
+                "$project": {
+                    "_id":  "$friends.user",
+                    "username": "$friendUser.username",
+                    "email": "$friendUser.email",
+                    "name":"$friendUser.name",
+                    "profileNum":"$friendUser.profileNum",
+                    "status": "$friends.status"
+                }
+            }
+        ]);
+        
+        const searchUsers = await User.find({ "username": username });
+        const friend = friends.filter((item) => {
+            return item._id== receiverId;
+        }) as any;
+        return res.render("profile.ejs", { users: users, user:user, friends:friends,userStatus:friend[0], searchUsers: searchUsers });
     } else {
         return res.redirect('back');
     }

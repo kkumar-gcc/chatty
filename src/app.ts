@@ -34,7 +34,9 @@ app.set('views', path.join(__dirname, '/views'));
 app.set('view engine','ejs');
 
 require("./socket/private.socket")(io);
-  
+app.get("/reg",(req:Request,res:Response)=>{
+    res.render("register2.ejs")
+})
 server.listen(port, () =>{
     log.info(`server started at http://${host}:${port}`);
     connect();

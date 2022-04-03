@@ -15,6 +15,7 @@ import { getHomeHandler } from "../controllers/home.controller";
 import { postMessageHandler } from "../controllers/message.controller";
 import { searchResultHandler,getsearchResultHandler } from "../controllers/search.controller";
 import { friendReqActionHandler, userFriendHandler } from "../controllers/friend.controller";
+import isFriend from "../middlewares/isFriend";
 
 export default function (app: Application) {
 
@@ -35,8 +36,8 @@ export default function (app: Application) {
     app.get("/logout",isLogin,deleteUserSessionsHandler);
 
     app.get("/home",isLogin,getHomeHandler);
-    app.get("/chat/:id",isLogin,getRoomHandler);
-    app.post("/chat/:id",isLogin,postMessageHandler);
+    app.get("/chat/:id",isLogin,isFriend,getRoomHandler);
+    app.post("/chat/:id",isLogin,isFriend,postMessageHandler);
 
     app.get("/search",isLogin,searchResultHandler);
     app.post("/search/user",isLogin,getsearchResultHandler);

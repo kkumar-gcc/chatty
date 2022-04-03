@@ -44,7 +44,7 @@ export async function getUserSessionsHandler(req: Request, res: Response) {
     var  user = req.session.user as any;
 
     const sessions = await findSessions({ user: user.id, valid: true });
-    log.info(sessions);
+
     return res.send(sessions);
 }
 

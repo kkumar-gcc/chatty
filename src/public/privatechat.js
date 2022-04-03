@@ -1,4 +1,11 @@
 $(document).ready(function () {
+  $("#message").keypress(function (e) {
+    if(e.which === 13 && !e.shiftKey) {
+        e.preventDefault();
+    
+        $(this).closest("form").submit();
+    }
+});
   var socket = io();
 
   var parameOne = $.deparam(window.location.pathname);
