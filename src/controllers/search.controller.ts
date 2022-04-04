@@ -55,15 +55,17 @@ export async function getsearchResultHandler(req: Request, res: Response) {
                     "email": "$friendUser.email",
                     "name":"$friendUser.name",
                     "profileNum":"$friendUser.profileNum",
-                    "status": "$friends.status"
+                    "status": "$friends.status",
+                    "description":"$friendUser.description"
                 }
             }
         ]);
-        
+        // find({"$text":{"$search":"\"Craig\" \"Dr. Bob\""}})
         const searchUsers = await User.find({ "username": username });
         const friend = friends.filter((item) => {
             return item._id== receiverId;
         }) as any;
+        log.info(friend);
         return res.render("profile.ejs", { users: users, user:user, friends:friends,userStatus:friend[0], searchUsers: searchUsers });
     } else {
         return res.redirect('back');

@@ -18,7 +18,8 @@ export async function getFriends(id: string) {
                         "$project": {
                             "name": 1,
                             "email": 1,
-                            'username': 1
+                            'username': 1,
+                            'description':1
                         }
                     }
                 ],

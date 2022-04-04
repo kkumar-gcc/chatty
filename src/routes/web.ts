@@ -1,5 +1,5 @@
 import { Request, Response, Application } from "express";
-import { createUserHandler} from "../controllers/user.controller";
+import { createUserHandler, getUserHandler} from "../controllers/user.controller";
 import { createUserSessionHandler, deleteUserSessionsHandler, getUserSessionsHandler} from "../controllers/session.controller";
 
 import validateRequest from '../middlewares/validateRequest';
@@ -45,8 +45,8 @@ export default function (app: Application) {
     app.post("/user/request",isLogin,userFriendHandler);
     
     app.post("/user/requestAccept",isLogin,friendReqActionHandler);
-
-    ///testing routes
+    app.post("/profile/update",isLogin,getUserHandler)
+    ///testing routes /profile/update
     app.get("/verify",async (req: Request, res: Response) => {
 
        const jwtToken= signJwt({

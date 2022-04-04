@@ -1,5 +1,20 @@
 $(document).ready(function () {
- 
+//   $("#message_form").on("submit", function (e) {
+//     e.preventDefault();
+//     /profile/update
+//       $.ajax({
+//         url: "/chat/" + parameOne,
+//         type: "POST",
+//         data: {
+//           message: msg,
+//         },
+//         success: function (data) {
+//           $("#message").val("");
+//         },
+//       });
+  
+// });
+  
   $("input.typeahead").typeahead({
     header: "Your Events",
     source: function (query, process) {
@@ -20,7 +35,7 @@ $(document).ready(function () {
         <h3 class="profile-tag">${item.username.substring(0, 2)}</h3>
        </div>
       <div class="ProfileCard-details">
-      <div class="ProfileCard-realName">${item.name}</div>
+      
       <div class="ProfileCard-screenName">@${item.username}</div>
     </div>
     </div>`;
