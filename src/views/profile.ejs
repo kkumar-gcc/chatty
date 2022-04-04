@@ -25,7 +25,12 @@
 <body>
   <%-include("include/request.ejs",{friends:friends}) %>
     <%-include("include/search.ejs") %>
+    <% if(userStatus) {%> 
+    <%-include("include/searchProfile.ejs",{userStatus:userStatus})%>
+    <% } %> 
       <%-include("include/profile.ejs",{user:user}) %>
+      <%-include("include/updateProfile.ejs",{user:user})%> 
+     
         <div class="main-container clearfix">
           <div class="chat-list">
             <div class="user-container">
@@ -53,7 +58,7 @@
                     <li>
                       <a class="dropdown-item" data-bs-toggle="offcanvas" href="#offcanvasProfile" role="button"
                         aria-controls="offcanvasRequest">
-                        Setting
+                        Profile
                       </a>
                     </li>
                     <li> <a data-bs-toggle="modal" data-bs-target="#modalRequest" class="dropdown-item"
@@ -124,10 +129,11 @@
                    
                     <div class="links">
                       <% if(userStatus) {%> 
+                        
                         <% if(userStatus.status==3) {%> 
                           <a href="/chat/<%=userStatus._id %>-<%=user._id %>  " class="btn follow" role="bu">Message</a>
-                         
-                          <button class="btn view ">View Profile</button>
+                          <button class="btn view" type="button" data-bs-toggle="modal" data-bs-target="#modalSProfile">View Profile</button>
+               
                           <% } else if(userStatus.status==1){%> 
                             <h5><span class="badge badge-secondary text-light bg-secondary">Requested</span></h5>
                      

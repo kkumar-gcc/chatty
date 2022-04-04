@@ -3,7 +3,7 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="modalRequestLabel">Requests</h5>
+        <h5 class="modal-title" id="modalRequestLabel">Chat Requests</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
 
@@ -13,11 +13,11 @@
 
           <div class="request-main">
             <div class="request-header">
-              <p>Friend Requests</p>
+              <p>Chat Requests</p>
             </div>
             <% for(i=0;i<friends.length;i++) {%>
 
-              <% if(friends[i].status!=(3||4)) {%> 
+              <% if(friends[i].status!=3) {%> 
               <div class="request">
                 <div class="request-top">
                   <div class="profile profile-<%=friends[i].profileNum %>">
@@ -30,7 +30,10 @@
                   </div>
                 </div>
                 <div class="request-bottom">
-                  <% if(friends[i].status==1){%> 
+                  <% if(friends[i].status==4){%> 
+                    <h5><span class="badge badge-secondary text-light bg-danger">Declined</span></h5>
+                   
+                  <%} if(friends[i].status==1){%> 
                   <h5><span class="badge badge-secondary text-light bg-secondary">Requested</span></h5>
                   <% } if(friends[i].status==2) {%> 
                   <span  style="float:left;">

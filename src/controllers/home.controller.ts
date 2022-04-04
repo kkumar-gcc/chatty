@@ -38,7 +38,8 @@ export async function getHomeHandler(req: Request, res: Response) {
                         "email": "$friendUser.email",
                         "name":"$friendUser.name",
                         "profileNum":"$friendUser.profileNum",
-                        "status": "$friends.status"
+                        "status": "$friends.status",
+                        "description":"$friendUser.description"
                     }
                 }
                

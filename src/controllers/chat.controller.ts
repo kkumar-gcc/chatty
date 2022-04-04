@@ -85,7 +85,8 @@ export async function getRoomHandler(req: Request, res: Response) {
                         "email": "$friendUser.email",
                         "name":"$friendUser.name",
                         "profileNum":"$friendUser.profileNum",
-                        "status": "$friends.status"
+                        "status": "$friends.status",
+                        "description":"$friendUser.description"
                     }
                 }
             ], function (err: any, newResult: any) {
