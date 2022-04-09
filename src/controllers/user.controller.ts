@@ -6,13 +6,16 @@ import mongoose from 'mongoose';
 import User from '../models/user.model';
 export async function createUserHandler(req: Request, res: Response) {
     const olduser = await User.find({ "$or": [{ "email": req.body.email }, { "username": { $regex: req.body.username, $options: 'i' } }] }) as any;
+
     if (olduser && olduser.length > 0) {
         req.flash("uniError", "username or email already exits");
         return res.redirect("back");
     }
     try {
+
         const user = await createUser(req.body);
         return res.render("login.ejs", { success: "account successfully created" });
+
     } catch (e: any) {
         if (e.name === "ValidationError") {
             let errors = {} as any;
@@ -34,6 +37,7 @@ export async function createUserHandler(req: Request, res: Response) {
 export async function getUserHandler(req: Request, res: Response) {
         const user = req.session.user as any;
         User.findOneAndUpdate({_id:user._id},{name: req.body.name,description: req.body.description},{new: true},(err:any,doc:any)=>{
+            console.log('#### Updated Record ####',doc);
             return res.redirect("/home");
        });  
         // const updateUser = await User.findOneAndUpdate({ "_id": user._id },
