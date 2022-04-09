@@ -96,7 +96,6 @@ export async function getRoomHandler(req: Request, res: Response) {
     ], (err: any, results: any) => {
         const result = results[1];
         const result2 = results[2];
-    //    log.info(result);
         return res.render("privatechat.ejs", { user: user,friends:result2, chats: result, moment: moment, receiver: receiver });
     })
 }

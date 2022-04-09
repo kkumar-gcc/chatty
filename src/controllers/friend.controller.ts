@@ -3,7 +3,57 @@ import { omit } from 'lodash';
 import { createUser } from '../services/user.service';
 import log from '../logger';
 import User from '../models/user.model';
+import async from 'async';
 import Friend from '../models/friend.model';
+import mongoose from 'mongoose';
+export async function userFriendRequestsHandler(req: Request, res: Response) {
+    const user = req.session.user as any;
+
+    async.parallel([
+        async function (callback: any) {
+            await User.aggregate([
+                {
+                    "$match": { _id: new mongoose.Types.ObjectId(user._id)}
+                },
+                {
+                    "$unwind": "$friends"
+                },
+                {
+                    "$lookup": {
+                        "from": User.collection.name,
+                        "localField": "friends.user",
+                        "foreignField": "_id",
+                        "as": "friendUser"
+                    }
+                },
+                {
+                    "$unwind": "$friendUser"
+                },
+                {
+                    "$project": {
+                        "_id":  "$friends.user",
+                        "username": "$friendUser.username",
+                        "email": "$friendUser.email",
+                        "name":"$friendUser.name",
+                        "profileNum":"$friendUser.profileNum",
+                        "status": "$friends.status",
+                        "description":"$friendUser.description"
+                    }
+                }
+               
+
+            ], function (err: any, newResult: any) {
+                callback(err, newResult);
+            })
+        }
+    ], (err: any, results: any) => {
+        const friends = results[0];
+        return res.render("request.ejs", { user:user,friends:friends});
+    })
+    // return res.redirect('/home');
+}
+
+
 export async function userFriendHandler(req: Request, res: Response) {
     const user = req.session.user as any;
 
