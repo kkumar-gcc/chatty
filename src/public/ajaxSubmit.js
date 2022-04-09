@@ -19,7 +19,7 @@ $(document).ready(function () {
     header: "Your Events",
     source: function (query, process) {
       return $.getJSON(
-        "/searchUser",
+        "/search",
         {
           query: query,
         },

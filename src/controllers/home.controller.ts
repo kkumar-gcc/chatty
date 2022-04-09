@@ -8,6 +8,7 @@ import User from '../models/user.model';
 import Friend from '../models/friend.model';
 import mongoose from 'mongoose';
 export async function getHomeHandler(req: Request, res: Response) {
+    const users = await User.find();
     const user = req.session.user as any;
 
     async.parallel([
@@ -49,7 +50,7 @@ export async function getHomeHandler(req: Request, res: Response) {
         }
     ], (err: any, results: any) => {
         const friends = results[0];
-        return res.render("home.ejs", { user:user,friends:friends});
+        return res.render("home.ejs", { user:user,friends:friends, users: users });
     })
 }
 

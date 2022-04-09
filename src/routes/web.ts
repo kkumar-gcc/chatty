@@ -13,10 +13,9 @@ import loggedIn from "../middlewares/loggedIn";
 import { getChatHandler, getRoomHandler } from "../controllers/chat.controller";
 import { getHomeHandler } from "../controllers/home.controller";
 import { postMessageHandler } from "../controllers/message.controller";
-import { searchResultHandler,getsearchResultHandler,searchUserResultHandler } from "../controllers/search.controller";
-import { friendReqActionHandler, userFriendHandler,userFriendRequestsHandler } from "../controllers/friend.controller";
+import { searchResultHandler,getsearchResultHandler } from "../controllers/search.controller";
+import { friendReqActionHandler, userFriendHandler } from "../controllers/friend.controller";
 import isFriend from "../middlewares/isFriend";
-import { newPasswordRequestHandler, newPasswordResponseHandler, resetPasswordRequestHandler,resetPasswordResponseHandler } from "../controllers/auth/auth.controller";
 
 export default function (app: Application) {
 
@@ -41,20 +40,13 @@ export default function (app: Application) {
     app.post("/chat/:id",isLogin,isFriend,postMessageHandler);
 
     app.get("/search",isLogin,searchResultHandler);
-    app.get("/searchUser",isLogin,searchUserResultHandler);
-    app.post("/search",isLogin,getsearchResultHandler);
+    app.post("/search/user",isLogin,getsearchResultHandler);
   
     app.post("/user/request",isLogin,userFriendHandler);
     
     app.post("/user/requestAccept",isLogin,friendReqActionHandler);
-    app.post("/profile/update",isLogin,getUserHandler);
-     app.get("/passwordReset",loggedIn,resetPasswordRequestHandler);
-     app.post("/passwordReset",loggedIn,resetPasswordResponseHandler);
-     app.get("/passwordReset/:token",loggedIn,newPasswordRequestHandler);
-     app.post("/passwordReset/:token",loggedIn,newPasswordResponseHandler);
-     app.get("/user/request",isLogin,userFriendRequestsHandler);
+    app.post("/profile/update",isLogin,getUserHandler)
     ///testing routes /profile/update
-   
     app.get("/verify",async (req: Request, res: Response) => {
 
        const jwtToken= signJwt({

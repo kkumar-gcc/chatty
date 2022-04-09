@@ -38,7 +38,7 @@ app.get("/reg",(req:Request,res:Response)=>{
     res.render("register2.ejs")
 })
 server.listen(port, () =>{
-    log.info(`server started at http://${host}:${port}/register`);
+    log.info(`server started at http://${host}:${port}`);
     connect();
     routes(app);
 });
