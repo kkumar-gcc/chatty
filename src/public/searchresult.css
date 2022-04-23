@@ -21,17 +21,19 @@
 
 .typeahead {
   width: 60%;
- 
+max-height: 85%;
+overflow-y: scroll;
 }
 
 
 .typeahead-menu {
   position: absolute;
-  top: 95%;
+  top: 96%;
   left: 2.5%;
   z-index: 100;
   width: 95%;
   margin-bottom: 20px;
+  
   overflow: hidden;
   background-color: #fff;
   -webkit-border-radius: 8px;

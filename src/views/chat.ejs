@@ -17,7 +17,7 @@
       integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
       crossorigin="anonymous"
     ></script>
-   
+
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
@@ -29,17 +29,55 @@
     <link rel="stylesheet" href="/home.css" />
     <link rel="stylesheet" href="/table.css" />
     <link rel="stylesheet" href="/searchresult.css" />
-    <link rel="stylesheet" href="/settings.css">
-   
+    <link rel="stylesheet" href="/settings.css" />
   </head>
   <body>
-    
     <div class="main-container clearfix">
       <div class="navbar-container">
         <%-include("include/navbar.ejs",{user:user})%>
       </div>
-      <div class="right-container">
-       
+      <div class="right-container chat-container">
+        <div class="chat-list">
+         
+            <ul class="list">
+              <% for(var i=0; i < friends.length; i++) { %> <%
+              if(friends[i].status==3) {%>
+              <div class="popover-product-update d-none" id="<%=i%>">
+                <%-include("include/popover.ejs",{user:friends[i]})%>
+              </div>
+              <li class="clearfix people-list-header">
+                <div
+                  class="profile profile-<%=friends[i].profileNum %>"
+                  data-toggle="popover"
+                  title="User Info"
+                >
+                <a href="/chat/<%=friends[i]._id%>-<%=user._id%>"
+                      >
+                  <h2 class="profile-tag">
+                    <%=friends[i].username.substring(0,2)%>
+                  </h2>
+                </a>
+                </div>
+                <!--<div class="about">
+                  <div class="name">
+                    <a href="/chat/<%=friends[i]._id%>-<%=user._id%>"
+                      >@<%= friends[i].username %></a
+                    >
+                  </div>
+                </div>-->
+              </li>
+              <% } %> <%}%>
+            </ul>
+          
+        </div>
+
+        <div class="chat">
+          <div class="start-chat-message">
+            <p>Select a chat to Start messaging</p>
+          </div>
+        </div>
+      </div>
+      <!-- end chat -->
     </div>
 
     <!-- end container -->
@@ -71,10 +109,7 @@
           trigger: "hover",
           html: true,
           content: function () {
-            return $(this)
-              .parent()
-              .siblings(".popover-product-update")
-              .html();
+            return $(this).parent().siblings(".popover-product-update").html();
           },
         });
       });

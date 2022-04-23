@@ -14,9 +14,10 @@ import { getChatHandler, getRoomHandler } from "../controllers/chat.controller";
 import { getHomeHandler } from "../controllers/home.controller";
 import { postMessageHandler } from "../controllers/message.controller";
 import { searchResultHandler,getsearchResultHandler,searchUserResultHandler } from "../controllers/search.controller";
-import { friendReqActionHandler, userFriendHandler,userFriendRequestsHandler } from "../controllers/friend.controller";
+import { friendReqActionHandler, getChatFriendHandler, userFriendHandler,userFriendRequestsHandler } from "../controllers/friend.controller";
 import isFriend from "../middlewares/isFriend";
 import { newPasswordRequestHandler, newPasswordResponseHandler, resetPasswordRequestHandler,resetPasswordResponseHandler } from "../controllers/auth/auth.controller";
+import isToken from "../middlewares/isToken";
 
 export default function (app: Application) {
 
@@ -37,6 +38,7 @@ export default function (app: Application) {
     app.get("/logout",isLogin,deleteUserSessionsHandler);
 
     app.get("/home",isLogin,getHomeHandler);
+    app.get("/chat",isLogin,getChatFriendHandler);
     app.get("/chat/:id",isLogin,isFriend,getRoomHandler);
     app.post("/chat/:id",isLogin,isFriend,postMessageHandler);
 
@@ -50,9 +52,9 @@ export default function (app: Application) {
     app.post("/profile/update",isLogin,getUserHandler);
      app.get("/passwordReset",loggedIn,resetPasswordRequestHandler);
      app.post("/passwordReset",loggedIn,resetPasswordResponseHandler);
-     app.get("/passwordReset/:token",loggedIn,newPasswordRequestHandler);
-     app.post("/passwordReset/:token",loggedIn,newPasswordResponseHandler);
-     app.get("/user/request",isLogin,userFriendRequestsHandler);
+     app.get("/passwordReset/:token",loggedIn,isToken,newPasswordRequestHandler);
+     app.post("/passwordReset/:token",loggedIn,isToken,newPasswordResponseHandler);
+     app.get("/chatrequests",isLogin,userFriendRequestsHandler);
     ///testing routes /profile/update
    
     app.get("/verify",async (req: Request, res: Response) => {

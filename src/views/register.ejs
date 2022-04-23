@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <!-- Design by foolishdeveloper.com -->
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>RandomChatApp</title>
 
     <link rel="preconnect" href="https://fonts.gstatic.com" />
@@ -19,125 +21,150 @@
 
     <link
       rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
-      integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
     />
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="/login/style.css" />
+    <link rel="stylesheet" href="/home.css" />
   </head>
   <body>
     <section>
-
-     
-      <div class="container active">
-        <div class="user signupBx">
-          <div class="formBx">
-            <form action="/register" method="post">
-              <h2>Create an account</h2>
-              <input type="hidden" name="profileNum" id="profileNum" value="" />
-              <% if(messages.uniError) { %>
-                <div class="toast show position-fixed top-0 end-0 mt-2 mr-2" role="alert" aria-live="assertive" aria-atomic="true" style="z-index: 110000">
+        <div class="login-container">
+          <div class="right-container">
+            <div class="login">
+              <h3>Get your account</h3>
+              <p>Already have an account? <a href="/login">Sign In</a></p>
+              <form action="/register" method="post">
+                <input type="hidden" name="profileNum" id="profileNum" value="" />
+                <% if(messages.uniError) { %>
+                <div
+                  class="toast show position-fixed top-0 end-0 mt-2 mr-2"
+                  role="alert"
+                  aria-live="assertive"
+                  aria-atomic="true"
+                  style="z-index: 110000"
+                >
                   <div class="toast-header">
                     <strong class="me-auto"></strong>
                     <small></small>
-                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                    <button
+                      type="button"
+                      class="btn-close"
+                      data-bs-dismiss="toast"
+                      aria-label="Close"
+                    ></button>
                   </div>
                   <div class="toast-body">
                     <span class="text-danger"><%=messages.uniError%></span>
                   </div>
                 </div>
-              
-              <%}%>
-              <input
-                type="email"
-                placeholder="Email "
-                name="email"
-                id="email"
-              />
-              <% if(messages.errors) { %> <% if(messages.errors[0].email) { %>
-              <div class="text-danger">
-                <span><%=messages.errors[0].email%></span>
-              </div>
-
-              <%}%> <%}%>
-              <input
-                type="text"
-                placeholder="Username "
-                name="username"
-                id="username"
-              />
-              <% if(messages.errors) { %> <% if(messages.errors[0].username) {
-              %>
-              <div class="text-danger">
-                <span><%=messages.errors[0].username%></span>
-              </div>
-
-              <%}%> <%}%>
-              <input type="text" placeholder="Name" id="name" name="name" />
-              <% if(messages.errors) { %> <% if(messages.errors[0].name) { %>
-              <div class="text-danger">
-                <span><%=messages.errors[0].name%></span>
-              </div>
-
-              <%}%> <%}%>
-              <input
-                type="password"
-                placeholder="Password"
-                id="password"
-                name="password"
-              />
-              <% if(messages.errors) { %> <% if(messages.errors[0].password) {
-              %>
-              <div class="text-danger">
-                <span><%=messages.errors[0].password%></span>
-              </div>
-
-              <%}%> <%}%>
-              <input
-                type="password"
-                placeholder="Confirm Password"
-                id="cpassword"
-                name="confirmPassword"
-              />
-              <% if(messages.errors) { %> <%
-              if(messages.errors[0].confirmPassword) { %>
-              <div class="text-danger">
-                <span><%=messages.errors[0].confirmPassword%></span>
-              </div>
-
-              <%}%> <%}%>
-              <input type="submit" name="" value="Sign Up" />
-              <p class="signup">
-                Already have an account ?
-                <a href="/login">Sign in.</a>
-              </p>
-            </form>
+  
+                <%}%>
+                <label for="email">Email</label>
+                <input
+                  type="email"
+                  class="form-input"
+                  placeholder="name@example.com"
+                  name="email"
+                  id="email"
+                  autocomplete="off"
+                />
+                <% if(messages.errors) { %> <% if(messages.errors[0].email) { %>
+                <div class="text-danger">
+                  <span><%=messages.errors[0].email%></span>
+                </div>
+  
+                <%}%> <%}%>
+                <label for="username">Username</label>
+  
+                <input
+                  type="text"
+                  class="form-input"
+                  placeholder="Username "
+                  name="username"
+                  autocomplete="off"
+                  id="username"
+                />
+                <% if(messages.errors) { %> <% if(messages.errors[0].username) {
+                %>
+                <div class="text-danger">
+                  <span><%=messages.errors[0].username%></span>
+                </div>
+  
+                <%}%> <%}%>
+                <label for="name">Name</label>
+                <input
+                  type="text"
+                  class="form-input"
+                  placeholder="Name"
+                  id="name"
+                  name="name"
+                  autocomplete="off"
+                />
+                <% if(messages.errors) { %> <% if(messages.errors[0].name) { %>
+                <div class="text-danger">
+                  <span><%=messages.errors[0].name%></span>
+                </div>
+  
+                <%}%> <%}%>
+                <label for="password">Password</label>
+                <input
+                  type="password"
+                  placeholder="Password"
+                  id="password"
+                  name="password"
+                  class="form-input"
+                  autocomplete="off"
+                />
+                <% if(messages.errors) { %> <% if(messages.errors[0].password) {
+                %>
+                <div class="text-danger">
+                  <span><%=messages.errors[0].password%></span>
+                </div>
+  
+                <%}%> <%}%>
+                <label for="cpassword">Confirm Password</label>
+                <input
+                  type="password"
+                  placeholder="Confirm Password"
+                  id="cpassword"
+                  name="confirmPassword"
+                  class="form-input"
+                  autocomplete="off"
+                />
+                <% if(messages.errors) { %> <%
+                if(messages.errors[0].confirmPassword) { %>
+                <div class="text-danger">
+                  <span><%=messages.errors[0].confirmPassword%></span>
+                </div>
+  
+                <%}%> <%}%>
+                <input type="submit" name="" class="form-btn" value="Sign Up" />
+              </form>
+            </div>
           </div>
-          <div class="imgBx">
-            <img
-              src="https://raw.githubusercontent.com/WoojinFive/CSS_Playground/master/Responsive%20Login%20and%20Registration%20Form/img2.jpg"
-              alt=""
-            />
+          <div class="left-container">
+            <h4>hello world</h4>
+            <div class="image">
+              <img src="/images/login2.png" alt="" />
+            </div>
           </div>
         </div>
-      </div>
-    </section>
-    <script
-      src="https://code.jquery.com/jquery-3.6.0.min.js"
-      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
-      crossorigin="anonymous"
-    ></script>
-    <script>
-      function between(min, max) {
-        return Math.floor(Math.random() * (max - min) + min);
-      }
-
-      $("#profileNum").val(between(1, 10));
-    </script>
+      </section>
+  
+      <script
+        src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+        crossorigin="anonymous"
+      ></script>
+      <script>
+        function between(min, max) {
+          return Math.floor(Math.random() * (max - min) + min);
+        }
+  
+        $("#profileNum").val(between(1, 10));
+      </script>
   </body>
 </html>
