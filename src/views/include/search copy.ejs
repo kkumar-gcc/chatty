@@ -57,7 +57,6 @@
                   aria-label="search user"
                   aria-describedby="basic-addon"
                 />
-                <input type="hidden" name="receiverId" id="receiverId">
                 <input
                   type="submit"
                   value="submit"
@@ -72,6 +71,7 @@
           </div>
           <div class="search-result">
             <% if(locals.searchUsers) {%> 
+              <p>search results for "<%= searchWord %> "</p>
             <div class="search-profile">
               
                 <% if(searchUsers.length> 0) {%>
@@ -92,18 +92,18 @@
                        <%= searchUsers[i].description%> 
                         </p>
                         <% } %> 
-                     
+                       
                         <div class="links">
-                          <% if(userStatus) {%> 
+                          <% if(searchUsers[i].status) {%> 
                             
-                            <% if(userStatus.status==3) {%> 
+                            <% if(searchUsers[i].status == 3) {%> 
                               <a href="/chat/<%=searchUsers[i]._id %>-<%=user._id %>  " class="btn follow" role="bu">Message</a>
                               <button class="btn view" type="button" data-bs-toggle="modal" data-bs-target="#modalSProfile">View Profile</button>
                    
-                              <% } else if(userStatus.status==1){%> 
+                            <% } else if(searchUsers[i].status==1){%> 
                                 <h5><span class="badge badge-secondary text-light bg-secondary">Requested</span></h5>
                          
-                                <% } else if(userStatus.status==2){%> 
+                            <% } else if(searchUsers[i].status==2){%> 
                                   <span  style="float:left;">
                                     <form action="/user/requestAccept" method="post">
                                       <input type="hidden" name="action" value="Accept">
@@ -120,19 +120,17 @@
                                       <input class="defaultBtn " role="button" type="submit" value="Not Now">
                                     </form>
                                   </span>
-                                  <% } else if(userStatus.status==4){%> 
-                                    <h5>
-                                      <span class="badge badge-danger  bg-danger">Declined</span>
-                                    </h5>
-                                    <% } %>
-                                    <% } else {%> 
-                                      <form action="/user/request" method="post">
-                                        <input type="hidden" name="recipientId" value="<%= searchUsers[i]._id %>">
-                                        <button type="submit" class="btn view">send request</button>
-                                      </form>
-                            <% } %> 
-                         
-                        
+                            <% } else if(searchUsers[i].status==4){%> 
+                                        <h5>
+                                          <span class="badge badge-danger  bg-danger">Declined</span>
+                                        </h5>
+                             <% }else {%> 
+                              <form action="/user/request" method="post">
+                                <input type="hidden" name="recipientId" value="<%= searchUsers[i]._id %>">
+                                <button type="submit" class="btn view">send request</button>
+                              </form>
+                <% } %>
+                             <% } %> 
                         </div>
                       </div>
                     </div>

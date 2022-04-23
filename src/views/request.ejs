@@ -30,6 +30,7 @@
     <link rel="stylesheet" href="/home.css" />
     <link rel="stylesheet" href="/table.css" />
     <link rel="stylesheet" href="/searchresult.css" />
+    <link rel="stylesheet" href="/settings.css">
   </head>
   <body>
     <div class="main-container clearfix">
@@ -45,12 +46,15 @@
                 <p>Chat Requests</p>
               </div>
               <% for(i=0;i<friends.length;i++) {%>
-    
+                    
                 <% if(friends[i].status!=3) {%> 
-                <div class="request">
+                <div class="request"><div class="popover-product-update d-none" id="<%=i%>">
+                      <%-include("include/popover.ejs",{user:friends[i]})%>
+                    </div>
                   <div class="request-top">
-                    <div class="profile profile-<%=friends[i].profileNum %>">
-                      <h2 class="profile-tag">
+                    
+                    <div class="profile profile-<%=friends[i].profileNum %>"  data-toggle="popover"  title="User Info">
+                      <h2 class="profile-tag" >
                         <%= friends[i].username.substring(0,2).toUpperCase()%>
                       </h2>
                     </div>
@@ -93,5 +97,25 @@
             </div>
       </div>
     </div>
+    <script
+    src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+    crossorigin="anonymous"
+  ></script>
+    <script src="/main.js"></script>
+    <script>
+      $(document).ready(function () {
+        $('[data-toggle="popover"]').popover({
+          trigger: "hover",
+          html: true,
+          content: function () {
+            return $(this)
+              .parent()
+              .siblings(".popover-product-update")
+              .html();
+          },
+        });
+      });
+    </script>
   </body>
 </html>

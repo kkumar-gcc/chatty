@@ -10,17 +10,17 @@ export async function sendEmail(email: string,title:string,name:string,link:stri
         secure: false,
         requireTLS: true,
         auth: {
-            user: "a@b.com",
-            pass: "******"
+            user: "",
+            pass: ""
         },
-        // logger: true
+        logger: true
       });
     await ejs.renderFile(__dirname + "/resetPasswordMail.ejs", { name: name,email:email,link:link }, function (err, data) {
         if (err) {
             console.log(err);
         } else {
             var mainOptions = {
-                from: '"no reply" a@B.COM',
+                from: '"no reply"',
                 to: `${email}`,
                 subject: `${title}`,
                 html: data

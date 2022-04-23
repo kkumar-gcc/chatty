@@ -1,0 +1,82 @@
+@import url(https://fonts.googleapis.com/css?family=Lato:400,700);
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+:root {
+  --color1: #ecf4f4;
+  --color2: #b9dddd;
+  --color3: #c6c2b7;
+  --color4: #3e5b5c;
+  --color5: #328e8f;
+  --color6: #519d9d;
+  --color7: #d0872c;
+  --color8: white;
+  --color9: #f2d184;
+  --color10: #866118;
+  --width: 240px;
+}
+body {
+  background: #444753;
+  font: 14px/20px "Lato", Arial, sans-serif;
+  color: #8f9198;
+  padding: 0px;
+  margin: 0px;
+  height: 100%;
+  /* overflow: hidden; */
+}
+/*setting sidebar styling */
+.setting-container {
+    margin: 0px;
+    background: #444753;
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+  }
+ .setting-left{
+  width: var(--width);
+  padding: 30px;
+  background: var(--color8);
+  position: relative;
+  min-height: 100%;
+  border-right: 1px solid var(--color5);
+}
+.setting-container .setting-right{
+  width: calc(100vw - var(--width));
+  background: var(--color8);
+  /* background-image: url("https://themesbrand.com/doot/layouts/assets/images/bg-pattern/pattern-05.png"); */
+}
+.setting-bar {
+  list-style-type: none;
+  padding: 0;
+  display: block;
+}
+.setting-bar .setting-sub {
+  padding: 10px 0px;
+  margin-bottom: 10px;
+}
+
+.setting-bar .setting-sub a {
+  font-size: 20px;
+  text-decoration: inherit;
+  color: var(--color3);
+}
+.setting-bar .setting-sub a span {
+  position: absolute;
+  margin-left: -40px;
+}
+.navbar .nav-sub.active-page a {
+  color: var(--color6);
+}
+.btn-setting{
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  border-radius: 50%;
+  border: 2px solid var(--color4);
+  color: var(--color5);
+  padding:10px;
+}
+/*setting sidebar styling end*/
