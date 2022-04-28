@@ -19,6 +19,7 @@ export async function searchUserResultHandler(req: Request, res: Response) {
     } catch (err) {
         console.log(err);
     }
+    log.info(results)
     res.send(JSON.stringify(results));
 }
 export async function searchResultHandler(req: Request, res: Response) {

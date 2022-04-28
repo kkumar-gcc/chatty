@@ -18,6 +18,7 @@ import { friendReqActionHandler, getChatFriendHandler, userFriendHandler,userFri
 import isFriend from "../middlewares/isFriend";
 import { newPasswordRequestHandler, newPasswordResponseHandler, resetPasswordRequestHandler,resetPasswordResponseHandler } from "../controllers/auth/auth.controller";
 import isToken from "../middlewares/isToken";
+import { getNotificationHandler } from "../controllers/notification.controller";
 
 export default function (app: Application) {
 
@@ -55,6 +56,8 @@ export default function (app: Application) {
      app.get("/passwordReset/:token",loggedIn,isToken,newPasswordRequestHandler);
      app.post("/passwordReset/:token",loggedIn,isToken,newPasswordResponseHandler);
      app.get("/chatrequests",isLogin,userFriendRequestsHandler);
+
+     app.get("/notifications",isLogin,getNotificationHandler);
     ///testing routes /profile/update
    
     app.get("/verify",async (req: Request, res: Response) => {

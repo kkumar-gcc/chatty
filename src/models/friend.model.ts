@@ -21,6 +21,7 @@ const FriendSchema = new mongoose.Schema(
               1,    //'requested',
               2,    //'pending',
               3,    //'friends'
+              4,    // "declined"
           ]
         }
     },

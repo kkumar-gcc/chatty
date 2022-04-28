@@ -67,10 +67,13 @@
                 />
                 <!-- <button class="button-14" role="button" type="submit">Submit</button> -->
               </div>
-                <input type="hidden" name="receiverId" id="receiverId" />
+                <!-- <input type="hidden" name="receiverId" id="receiverId" /> -->
             </form>
           </div>
           <div class="search-result">
+            <% if(locals.searchQuery) {%> 
+            <p>Search Results for "<%= searchQuery %> "</p>
+            <% } %> 
             <% if(locals.searchUsers) {%> 
             <div class="search-profile">
               
@@ -142,7 +145,7 @@
                         <%}%>
               </div>
               <%} else {%>
-                <p>Suggested for you</p>
+                <p>Suggested for you (Future Plan)</p>
                 <%}%>
               
           </div>
