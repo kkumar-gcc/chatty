@@ -1,19 +1,5 @@
 $(document).ready(function () {
-//   $("#message_form").on("submit", function (e) {
-//     e.preventDefault();
-//     /profile/update
-//       $.ajax({
-//         url: "/chat/" + parameOne,
-//         type: "POST",
-//         data: {
-//           message: msg,
-//         },
-//         success: function (data) {
-//           $("#message").val("");
-//         },
-//       });
-  
-// });
+
   
   $("input.typeahead").typeahead({
     header: "Your Events",

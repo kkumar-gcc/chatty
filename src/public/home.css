@@ -96,6 +96,9 @@ ul {
 .navbar .nav-sub.active-page a {
   color: var(--color6);
 }
+.setting-bar .setting-sub.active a {
+  color: var(--color6);
+}
 /* navbar styling finish */
 
 /* search page styling */
@@ -521,8 +524,8 @@ input.button {
   top: 19px;
   right: 30px;
   padding: 12px 20px;
-  background-color: rgba(78, 172, 109, 1);
-  color: rgba(255, 255, 255, 0.8);
+  background-color: var(--color5);
+  color: var(--color1);
   font-size: 16px;
   border: none;
   border-radius: 5px;

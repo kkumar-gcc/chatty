@@ -48,7 +48,8 @@
               <% for(i=0;i<friends.length;i++) {%>
                     
                 <% if(friends[i].status!=3) {%> 
-                <div class="request"><div class="popover-product-update d-none" id="<%=i%>">
+                <div class="request">
+                  <div class="popover-product-update d-none" id="<%=i%>">
                       <%-include("include/popover.ejs",{user:friends[i]})%>
                     </div>
                   <div class="request-top">

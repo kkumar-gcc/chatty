@@ -15,4 +15,10 @@ $(document).ready(function () {
       $navItems.filter(function(){
         return $(this).find('a').prop('href') === location.href;
       }).addClass("active-page");
+
+      $('ul.setting-bar > li').click(function(e) {
+        e.preventDefault();
+        $('ul.setting-bar  > li').removeClass('active');
+        $(this).addClass('active');
+      });
 });
