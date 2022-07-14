@@ -2,9 +2,9 @@
   "name": "chatty",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/app.js",
+  "main": "dis/app.js",
   "scripts": {
-    "clean": "rimraf dist/*",
+    "clean": "rimraf dis/*",
     "copy-assets": "ts-node tools/copyAssets",
     "lint": "tslint -c tslint.json -p tsconfig.json --fix",
     "tsc": "tsc -p .",
@@ -14,7 +14,7 @@
     "prestart": "npm run build",
     "start": "node .",
     "postinstall": "npm run build",
-    "prod": "node dist/app.js",
+    "prod": "node dis/app.js",
     "fun":"nodemon src/app.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
