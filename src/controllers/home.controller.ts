@@ -11,7 +11,7 @@ export async function getHomeHandler(req: Request, res: Response) {
     const user = req.session.user as any;
 
     async.parallel([
-        async function (callback: any) {
+        async (callback: any) => {
             await User.aggregate([
                 {
                     "$match": { _id: new mongoose.Types.ObjectId(user._id)}
@@ -41,15 +41,15 @@ export async function getHomeHandler(req: Request, res: Response) {
                         "description":"$friendUser.description"
                     }
                 }
-               
 
-            ], function (err: any, newResult: any) {
+
+            ],(err: any, newResult: any) => {
                 callback(err, newResult);
             })
         }
     ], (err: any, results: any) => {
         const friends = results[0];
-        return res.render("home.ejs", { user:user,friends:friends});
+        return res.render("home.ejs", { user,friends});
     })
 }
 
@@ -78,7 +78,7 @@ export async function getHomeHandler(req: Request, res: Response) {
                 //             }}
 
                 //         ],
-                        
+
                 //         "as": "friends"
                 //     },
 

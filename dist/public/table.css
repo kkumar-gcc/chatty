@@ -1,0 +1,119 @@
+@import "https://fonts.googleapis.com/css?family=Montserrat:300,400,700";
+.offcanvas {
+  height: 100vh;
+}
+.request-main {
+  border: 1px solid #d5d9d9;
+  border-bottom: none;
+  border-radius: 6px 6px 0px 0px;
+}
+.request-main .request-header {
+  margin: 0px;
+  border-radius: 6px 6px 0px 0px;
+  border-bottom: 1px solid #d5d9d9;
+  padding: 5px 20px;
+  font-size: 16px;
+  font-weight:500;
+  color: #565757;
+
+}
+.request-main .request-header p{
+	margin:0px;
+}
+.request-main .request {
+  display: flex;
+  flex-direction: row;
+  border-bottom: 1px solid  #d5d9d9;
+}
+
+.request-top {
+  flex: 50%;
+  display: flex;
+  flex-direction: row;
+  padding: 10px;
+}
+.request-top .profile{
+	align-items: center;
+	margin-top:5px;
+	margin-left: 10px;
+}
+.request-top .username {
+  padding: 13px 30px;
+  align-items: center;
+  color: #0077CC;
+  font-size:20px;
+}
+
+.request-bottom {
+  flex: 50%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  
+}
+
+.defaultBtn {
+  position: relative;
+  z-index: 1;
+  overflow: visible;
+  display: inline-block;
+  padding: 0.3em 0.6em 0.375em;
+  border: 1px solid #999;
+  border-top-color: rgb(153, 153, 153);
+  border-right-color: rgb(153, 153, 153);
+  border-bottom-color: rgb(153, 153, 153);
+  border-left-color: rgb(153, 153, 153);
+  border-bottom-color: #888;
+  margin: 5px;
+  text-decoration: none;
+  text-align: center;
+  font: bold 16px / normal "lucida grande", tahoma, verdana, arial, sans-serif;
+  white-space: nowrap;
+  cursor: pointer;
+  outline: none;
+  color: #333;
+  background-color: #eee;
+  background-image: -webkit-gradient(
+    linear,
+    0 0,
+    0 100%,
+    from(#f5f6f6),
+    to(#e4e4e3)
+  );
+  background-image: -moz-linear-gradient(#f5f6f6, #e4e4e3);
+  background-image: -o-linear-gradient(#f5f6f6, #e4e4e3);
+  background-image: linear-gradient(#f5f6f6, #e4e4e3);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#f5f6f6', EndColorStr='#e4e4e3');
+  -webkit-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1), inset 0 1px 0 #fff;
+  -moz-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1), inset 0 1px 0 #fff;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1), inset 0 1px 0 #fff;
+  zoom: 1;
+  *display: inline;
+}
+
+.defaultBtn.confirm {
+  border-color: #29447e #29447e #1a356e;
+  color: #fff;
+  background-color: #5b74a8;
+  background-image: -webkit-gradient(
+    linear,
+    0 0,
+    0 100%,
+    from(#637bad),
+    to(#5872a7)
+  );
+  background-image: -moz-linear-gradient(#637bad, #5872a7);
+  background-image: -o-linear-gradient(#637bad, #5872a7);
+  background-image: linear-gradient(#637bad, #5872a7);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#637bad', EndColorStr='#5872a7');
+  -webkit-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1), inset 0 1px 0 #8a9cc2;
+  -moz-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1), inset 0 1px 0 #8a9cc2;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1), inset 0 1px 0 #8a9cc2;
+}
+
+@media only screen and (max-width: 464px){
+	.request-main .request{
+		flex-direction: column;
+	}
+}

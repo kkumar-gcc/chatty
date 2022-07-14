@@ -1,0 +1,35 @@
+ <nav data-scrollbar="true" data-height="100%">
+      
+      <div class="logo">
+        <div class="profile profile-<%=user.profileNum %>">
+          <h2 class="profile-tag">
+            <%= user.username.substring(0,2)%>
+          </h2>
+        </div>
+
+        <div class="user-about">
+          <div class="user-name">
+            <%= user.name%>
+          </div>
+        </div>
+      </div>
+      <ul class="navbar">
+        <li class="nav-sub"><a href="/home"><span><i class="fa-solid fa-house"></i></span> Home</a></li>
+        <li class="nav-sub "><a href="/chat"><span><i class="fa-solid fa-comment-dots"></i></span> Chat</a></li>
+        <li class="nav-sub"><a href="/notifications" ><span><i class="fa-solid fa-bell"></i></span> Notifications (Future Access)</a></li>
+        <li class="nav-sub"><a href="/chatrequests"><span><i class="fa-solid fa-user-plus"></i></span> Chat Requests</a>
+        </li>
+        <li class="nav-sub"><a href="/search"><span><i class="fa-solid fa-magnifying-glass"></i></span> Search</li>
+      </ul>
+      <ul class="navbar navbar-bottom">
+        <li class="nav-sub"><a   
+          data-bs-toggle="modal" data-bs-target="#settingModal"
+          href="#settingModal"
+          role="button"
+          aria-controls="modalRequest"><span><i class="fa-solid fa-gear"></i></span> Settings</a></li>
+        <li class="nav-sub"><a href="/logout"><span><i class="fa-solid fa-arrow-right-from-bracket"></i></span>
+            Logout</a></li>
+      </ul>
+      <%-include("settings.ejs",{user:user}) %>
+    </nav>
+   

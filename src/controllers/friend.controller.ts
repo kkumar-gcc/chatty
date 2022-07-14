@@ -10,7 +10,7 @@ export async function getChatFriendHandler(req: Request, res: Response) {
     const user = req.session.user as any;
 
     async.parallel([
-        async function (callback: any) {
+        async (callback: any) => {
             await User.aggregate([
                 {
                     "$match": { _id: new mongoose.Types.ObjectId(user._id)}
@@ -40,22 +40,22 @@ export async function getChatFriendHandler(req: Request, res: Response) {
                         "description":"$friendUser.description"
                     }
                 }
-               
 
-            ], function (err: any, newResult: any) {
+
+            ],(err: any, newResult: any) => {
                 callback(err, newResult);
             })
         }
     ], (err: any, results: any) => {
         const friends = results[0];
-        return res.render("chat.ejs", { user:user,friends:friends});
+        return res.render("chat.ejs", { user,friends});
     })
 }
 export async function userFriendRequestsHandler(req: Request, res: Response) {
     const user = req.session.user as any;
 
     async.parallel([
-        async function (callback: any) {
+        async (callback: any) => {
             await User.aggregate([
                 {
                     "$match": { _id: new mongoose.Types.ObjectId(user._id)}
@@ -85,15 +85,15 @@ export async function userFriendRequestsHandler(req: Request, res: Response) {
                         "description":"$friendUser.description"
                     }
                 }
-               
 
-            ], function (err: any, newResult: any) {
+
+            ], (err: any, newResult: any) => {
                 callback(err, newResult);
             })
         }
     ], (err: any, results: any) => {
         const friends = results[0];
-        return res.render("request.ejs", { user:user,friends:friends});
+        return res.render("request.ejs", { user,friends});
     })
     // return res.redirect('/home');
 }
@@ -133,27 +133,27 @@ export async function userFriendHandler(req: Request, res: Response) {
 export async function friendReqActionHandler(req: Request, res: Response) {
     const user = req.session.user as any;
 
-    if (req.body.action == "Accept") {
+    if (req.body.action === "Accept") {
         const updateUserA = await User.updateOne(
             { _id: Object(user._id), "friends.user": Object(req.body.recipientId) },
-            { $set: { "friends.$.user":Object(req.body.recipientId) ,"friends.$.status": 3 } } 
+            { $set: { "friends.$.user":Object(req.body.recipientId) ,"friends.$.status": 3 } }
         );
-        
+
         const updateUserB = await User.updateOne(
             { _id: Object(req.body.recipientId), "friends.user": Object(user._id) },
-            { $set: { "friends.$.user":Object(user._id) ,"friends.$.status": 3 } } 
+            { $set: { "friends.$.user":Object(user._id) ,"friends.$.status": 3 } }
         );
     }
-    else if (req.body.action == "Decline") {
+    else if (req.body.action === "Decline") {
 
         const updateUserA = await User.updateOne(
             { _id: Object(user._id), "friends.user": Object(req.body.recipientId) },
-            { $set: { "friends.$.user":Object(req.body.recipientId) ,"friends.$.status": 4 } } 
+            { $set: { "friends.$.user":Object(req.body.recipientId) ,"friends.$.status": 4 } }
         )
         // { $set: { "friends.$.user":Object(req.body.recipientId) ,status: 4 } } }
         const updateUserB = await User.updateOne(
             { _id: Object(req.body.recipientId), "friends.user": Object(user._id) },
-            { $set: { "friends.$.user":Object(user._id) ,"friends.$.status": 4 } } 
+            { $set: { "friends.$.user":Object(user._id) ,"friends.$.status": 4 } }
         )
     }
     return res.redirect('/home');

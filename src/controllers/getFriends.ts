@@ -3,7 +3,7 @@ import log from "../logger";
 import User from "../models/user.model";
 import mongoose from "mongoose";
 export async function getFriends(id: string) {
-    
+
     const friends = await User.aggregate([
         { "$match": { _id: new mongoose.Types.ObjectId(id) } },
         {
@@ -13,7 +13,7 @@ export async function getFriends(id: string) {
                 "foreignField": "_id",
                 "let": { "friends": "$friends" },
                 "pipeline": [
-                
+
                     {
                         "$project": {
                             "name": 1,
@@ -26,7 +26,7 @@ export async function getFriends(id: string) {
                 "as": "friends"
             }
         }
-       
+
     ]);
     // log.info(friends);
 }

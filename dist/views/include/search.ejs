@@ -1,0 +1,47 @@
+<div
+  class="modal fade"
+  id="searchModal"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="searchModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="searchModalLabel">Search user</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form action="/search/user" method="post" id="form_search">
+          <div class="input-group">
+            <input
+              class="typeahead form-control"
+              name="query"
+              type="text"
+              data-provide="typeahead"
+              id="typeahead"
+              autocomplete="off"
+              placeholder="search user"
+              aria-label="search user"
+              aria-describedby="basic-addon"
+            />
+            <input type="hidden" name="receiverId" id="receiverId">
+            <input
+              type="submit"
+              value="submit"
+              class="input-group-text"
+              id="basic-addon"
+            />
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -16,7 +16,7 @@ export async function newPasswordRequestHandler(req: Request, res: Response, nex
     const userId = params[1];
     const token = params[0];
 
-    return res.render("newPassword.ejs", { userId: userId, token: token });
+    return res.render("newPassword.ejs", { userId, token });
 };
 export async function resetPasswordResponseHandler(req: Request, res: Response, next: NextFunction) {
     try {

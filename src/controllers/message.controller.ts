@@ -10,28 +10,28 @@ import { omit } from 'lodash';
 //     return res.render("privatechat.ejs",{users:users,user:req.session.user});
 // }
 export async function postMessageHandler(req: Request, res: Response, next: NextFunction) {
-    
+
     const user = req.session.user as any;
 
     const params = req.params.id.split('-');
 
     const receiverId = params[0];
-    
+
     async.waterfall([
-        function(callback: any) {
+        (callback: any) => {
             if (req.body.message) {
-               const receiver = User.findOne({ "_id": Object(receiverId) }, (err: any, data: any) => {
-                callback(err, omit(data.toJSON(),"password"));
+                const receiver = User.findOne({ "_id": Object(receiverId) }, (err: any, data: any) => {
+                    callback(err, omit(data.toJSON(), "password"));
                 });
             }
         },
-       async function(data:any,callback:any){
+        async (data: any, callback: any) => {
             if (req.body.message) {
-              const message= await createMessage(req.body.message, data._id, user._id)
-              callback(message);
-             }
+                const message = await createMessage(req.body.message, data._id, user._id)
+                callback(message);
+            }
         }
-    ],function(err,result){
-      res.redirect("/chat/"+req.params.id);
+    ], (err, result) => {
+        res.redirect("/chat/" + req.params.id);
     });
 }

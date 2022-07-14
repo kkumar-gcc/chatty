@@ -1,0 +1,68 @@
+<div class="modal fade" id="modalRequest" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-labelledby="modalRequestLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalRequestLabel">Chat Requests</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+
+      <div class="modal-body">
+        <% if(friends.length>0) {%>
+
+          <div class="request-main">
+            <div class="request-header">
+              <p>Chat Requests</p>
+            </div>
+            <% for(i=0;i<friends.length;i++) {%>
+
+              <% if(friends[i].status!=3) {%> 
+              <div class="request">
+                <div class="request-top">
+                  <div class="profile profile-<%=friends[i].profileNum %>">
+                    <h2 class="profile-tag">
+                      <%= friends[i].username.substring(0,2).toUpperCase()%>
+                    </h2>
+                  </div>
+                  <div class="username">
+                    <p><b>@<%=friends[i].username %> </b></p>
+                  </div>
+                </div>
+                <div class="request-bottom">
+                  <% if(friends[i].status==4){%> 
+                    <h5><span class="badge badge-secondary text-light bg-danger">Declined</span></h5>
+                   
+                  <%} if(friends[i].status==1){%> 
+                  <h5><span class="badge badge-secondary text-light bg-secondary">Requested</span></h5>
+                  <% } if(friends[i].status==2) {%> 
+                  <span  style="float:left;">
+                    <form action="/user/requestAccept" method="post">
+                      <input type="hidden" name="action" value="Accept">
+                      <input type="hidden" name="recipientId" value="<%=friends[i]._id%>">
+                      <input class="defaultBtn confirm" role="button" type="submit" value="Confirm">
+
+                    </form>
+                  </span>
+
+                  <span  style="float:right;">
+                    <form action="/user/requestAccept" method="post">
+                      <input type="hidden" name="action" value="Decline">
+                      <input type="hidden" name="recipientId" value="<%=friends[i]._id%>">
+                      <input class="defaultBtn" role="button" type="submit" value="Not Now">
+                    </form>
+                  </span>
+                  <% } %> 
+                </div>
+              </div>
+              <% } %> 
+              <% } %>
+          </div>
+          <% }else{ %>
+            <h2>no request</h2>
+            <% } %>
+      </div>
+
+    </div>
+  </div>
+</div>

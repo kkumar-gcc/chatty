@@ -1,0 +1,55 @@
+<div class="user-profile">
+  <div class="profile-top">
+    <div class="profile2 profile-<%=user.profileNum %>">
+      <h2 class="profile-tag2">
+        <%= user.username.substring(0,2).toUpperCase()%>
+      </h2>
+    </div>
+    <h3>@<%=user.username %></h3>
+    <!-- <div class="status"><i class="fa fa-circle online"></i> online</div> -->
+  </div>
+  <div class="profile-bottom">
+    <div class="update">
+      <form action="/profile/update" method="post">
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input
+            type="email"
+            class="form-control"
+            id="email"
+            name="email"
+            value="<%=user.email %>"
+            disabled
+            aria-disabled="true"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="name" class="form-label">Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="name"
+            name="name"
+            value="<%=user.name %>"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label for="description" class="form-label">Description</label>
+          <textarea
+            class="form-control"
+            id="description"
+            name="description"
+            rows="3"
+            style="resize: none"
+          >
+       <%=user.description %></textarea
+          >
+        </div>
+        <div class="detail">
+          <button class="view" type="submit">Update profile</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
