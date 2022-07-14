@@ -6,8 +6,8 @@ import User from '../models/user.model';
 import Message from '../models/message.model';
 import mongoose from 'mongoose';
 export async function getChatHandler(req: Request, res: Response) {
-    var users = await User.find() as any;
-    return res.render("privatechat.ejs", { users: users, user: req.session.user });
+    const users = await User.find() as any;
+    return res.render("privatechat.ejs", { users, user: req.session.user });
 }
 export async function getRoomHandler(req: Request, res: Response) {
     // var users = await User.find() as any;
@@ -17,12 +17,12 @@ export async function getRoomHandler(req: Request, res: Response) {
     const params = req.params.id.split('-');
 
     const receiverId = params[0];
-    
+
     const receiver = await User.findOne({_id:Object(receiverId)}) as any;
 
     async.parallel([
-        function (callback) {
-            var result = Message.aggregate([
+         (callback) => {
+            const result = Message.aggregate([
                 { "$match": { "$or": [{ "receiver": Object(user._id) }, { "sender": Object(user._id) }] } },
                 { "$sort": { "createdAt": -1 } },
                 {
@@ -41,12 +41,12 @@ export async function getRoomHandler(req: Request, res: Response) {
                             }
                         }, "body": { $first: "$$ROOT" }
                     }
-                }], function (err: any, newResult: any) {
+                }],(err: any, newResult: any) => {
                     callback(err, newResult);
 
                 });
         },
-        function (callback) {
+       (callback) => {
             Message.find({
                 "$or": [
                     { "$and": [{ "receiver": Object(receiverId) }, { "sender": Object(user._id) }] },
@@ -59,7 +59,7 @@ export async function getRoomHandler(req: Request, res: Response) {
                     callback(err, result3);
                 })
         },
-        async function (callback: any) {
+        async (callback: any) => {
             await User.aggregate([
                 {
                     "$match": { _id: new mongoose.Types.ObjectId(user._id)}
@@ -89,13 +89,13 @@ export async function getRoomHandler(req: Request, res: Response) {
                         "description":"$friendUser.description"
                     }
                 }
-            ], function (err: any, newResult: any) {
+            ],(err: any, newResult: any) =>{
                 callback(err, newResult);
             })
         }
     ], (err: any, results: any) => {
         const result = results[1];
         const result2 = results[2];
-        return res.render("privatechat.ejs", { user: user,friends:result2, chats: result, moment: moment, receiver: receiver });
+        return res.render("privatechat.ejs", { user,friends:result2, chats: result, moment, receiver });
     })
 }

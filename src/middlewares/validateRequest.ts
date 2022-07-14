@@ -13,11 +13,11 @@ const validate = (schema: AnySchema) => async (req: Request, res: Response, next
         return next();
     } catch (e: any) {
         if (e.name === "ValidationError") {
-           let errors = {} as any;
-           
+           const errors = {} as any;
+
             e.inner.forEach((x: any) => {
                 if (x.path !== undefined) {
-                  var  z =(x.path).slice(5);
+                  const  z =(x.path).slice(5);
                     errors[z] = x.errors;
                 }
             });

@@ -2,36 +2,42 @@ import nodemailer from "nodemailer";
 // import Mail from "nodemailer/lib/mailer";
 import ejs from "ejs";
 import fs from "fs-extra"
-export async function sendEmail(email: string,title:string,name:string,link:string) {
+import dotenv from 'dotenv';
+import log from "../logger";
+dotenv.config();
+export async function sendEmail(email: string, title: string, name: string, link: string) {
 
     const transporter = nodemailer.createTransport({
-        host: "smtp-mail.outlook.com",
-        port: 587,
+        host: `${process.env.MAIL_HOST}`,
+        port: Number(process.env.EMAIL_PORT) || 0,
         secure: false,
-        requireTLS: true,
+        tls: {
+            ciphers: 'SSLv3'
+        },
         auth: {
-            user: "",
-            pass: ""
+            user: `${process.env.MAIL_USERNAME}`,
+            pass: `${process.env.MAIL_PASSWORD}`
         },
         logger: true
-      });
-    await ejs.renderFile(__dirname + "/resetPasswordMail.ejs", { name: name,email:email,link:link }, function (err, data) {
+    });
+    await ejs.renderFile(__dirname + "/../views/resetPasswordMail.ejs", { name, email, link },(err, data) => {
         if (err) {
-            console.log(err);
+            log.error(err);
         } else {
-            var mainOptions = {
+            const mainOptions = {
                 from: '"no reply"',
                 to: `${email}`,
                 subject: `${title}`,
                 html: data
             };
-          transporter.sendMail(mainOptions, function (e, info) {
+            transporter.sendMail(mainOptions,(e, info) => {
                 if (e) {
-                   return false;
+                    return false;
                 } else {
                     return true;
                 }
             });
-        }}); 
-   
+        }
+    });
+
 }

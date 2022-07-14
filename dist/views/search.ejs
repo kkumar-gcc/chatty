@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Search</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+      crossorigin="anonymous"
+    />
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+      crossorigin="anonymous"
+    ></script>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+      integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    <link rel="stylesheet" href="/profileColor.css" />
+    <link rel="stylesheet" href="/home.css" />
+    <link rel="stylesheet" href="/table.css" />
+    <link rel="stylesheet" href="/searchresult.css" />
+    <link rel="stylesheet" href="/settings.css">
+  </head>
+  <body>
+    <% if(locals.userStatus) {%> 
+        <%-include("include/searchProfile.ejs",{userStatus:userStatus})%>
+        <% } %> 
+    <div class="main-container clearfix">
+      <div class="navbar-container">
+        <%-include("include/navbar.ejs",{user:user})%>
+      </div>
+      <div class="right-container">
+        <div class="search-page">
+          <div class="search-form">
+            <form action="/search" method="post" id="form_search">
+              <div class="search-group">
+                <span><i class="fa-solid fa-magnifying-glass"></i></span>
+                <input
+                  class="typeahead search-control"
+                  name="query"
+                  type="text"
+                  data-provide="typeahead"
+                  id="typeahead"
+                  autocomplete="off"
+                  placeholder="search user"
+                  aria-label="search user"
+                  aria-describedby="basic-addon"
+                />
+                <input type="hidden" name="receiverId" id="receiverId">
+                <input
+                  type="submit"
+                  value="submit"
+                  role="button"
+                  class="input-group-text "
+                  id="basic-addon"
+                />
+                <!-- <button class="button-14" role="button" type="submit">Submit</button> -->
+              </div>
+                <!-- <input type="hidden" name="receiverId" id="receiverId" /> -->
+            </form>
+          </div>
+          <div class="search-result">
+            <% if(locals.searchQuery) {%> 
+            <p>Search Results for "<%= searchQuery %> "</p>
+            <% } %> 
+            <% if(locals.searchUsers) {%> 
+            <div class="search-profile">
+              
+                <% if(searchUsers.length> 0) {%>
+                  <% for(var i=0;i<searchUsers.length;i++){ %>
+                    <div class="profile-card">
+                      <div class="img">
+                        <div class="profile2  profile-<%=searchUsers[i].profileNum %>">
+                          <h2 class="profile-tag2"><%= searchUsers[i].username.substring(0,2).toUpperCase()%></h2>
+                        </div>
+                      </div>
+                      <div class="infos">
+                        <div class="name">
+                          <h2>@<%= searchUsers[i].username %> </h2>
+                          <h4><%= searchUsers[i].name %></h4>
+                        </div>
+                        <% if(searchUsers[i].description) {%> 
+                        <p class="text">
+                       <%= searchUsers[i].description%> 
+                        </p>
+                        <% } %> 
+                     
+                        <div class="links">
+                          <% if(userStatus) {%> 
+                            
+                            <% if(userStatus.status==3) {%> 
+                              <a href="/chat/<%=searchUsers[i]._id %>-<%=user._id %>  " class="btn follow" role="bu">Message</a>
+                              <button class="btn view" type="button" data-bs-toggle="modal" data-bs-target="#modalSProfile">View Profile</button>
+                   
+                              <% } else if(userStatus.status==1){%> 
+                                <h5><span class="badge badge-secondary text-light bg-secondary">Requested</span></h5>
+                         
+                                <% } else if(userStatus.status==2){%> 
+                                  <span  style="float:left;">
+                                    <form action="/user/requestAccept" method="post">
+                                      <input type="hidden" name="action" value="Accept">
+                                      <input type="hidden" name="recipientId" value="<%=searchUsers[i]._id%>">
+                                      <input class="defaultBtn confirm profile-card__button button--blue js-message-btn" role="button" type="submit" value="Confirm">
+                                    
+                                    </form>
+                                  </span>
+                
+                                  <span>
+                                    <form action="/user/requestAccept" method="post">
+                                      <input type="hidden" name="action" value="Decline">
+                                      <input type="hidden" name="recipientId" value="<%=searchUsers[i]._id%>">
+                                      <input class="defaultBtn " role="button" type="submit" value="Not Now">
+                                    </form>
+                                  </span>
+                                  <% } else if(userStatus.status==4){%> 
+                                    <h5>
+                                      <span class="badge badge-danger  bg-danger">Declined</span>
+                                    </h5>
+                                    <% } %>
+                                    <% } else {%> 
+                                      <form action="/user/request" method="post">
+                                        <input type="hidden" name="recipientId" value="<%= searchUsers[i]._id %>">
+                                        <button type="submit" class="btn view">send request</button>
+                                      </form>
+                            <% } %> 
+                         
+                        
+                        </div>
+                      </div>
+                    </div>
+                    <% } %>
+                      <%} else {%>
+                        <p>user not found</p>
+                        <%}%>
+              </div>
+              <%} else {%>
+                <p>Suggested for you (Future Plan)</p>
+                <%}%>
+              
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"
+      integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.2/bootstrap3-typeahead.js"
+      integrity="sha512-P2Z/b+j031xZuS/nr8Re8dMwx6pNIexgJ7YqcFWKIqCdbjynk4kuX/GrqpQWEcI94PRCyfbUQrjRcWMi7btb0g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script src="/main.js"></script>
+    <script src="/ajaxSubmit.js"></script>
+  </body>
+</html>

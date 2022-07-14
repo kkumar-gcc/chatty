@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+      crossorigin="anonymous"
+    />
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+      crossorigin="anonymous"
+    ></script>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+      integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.0.0/mustache.min.js
+"></script>
+    <link rel="stylesheet" href="/home.css" />
+    <link rel="stylesheet" href="/profileColor.css" />
+    <link rel="stylesheet" href="/table.css" />
+    <link rel="stylesheet" href="/searchresult.css" />
+  </head>
+  <body>
+    <%-include("include/request.ejs",{user:user}) %>
+    <%-include("include/search.ejs") %>
+    <%-include("include/contactInfo.ejs",{receiver:receiver}) %>
+    <%-include("include/profile.ejs",{user:user}) %>
+    <div class="main-container clearfix">
+      <div class="chat-list">
+        <div class="user-container">
+          <div class="profile profile-<%=user.profileNum %>">
+            <h2 class="profile-tag"><%= user.username.substring(0,2)%></h2>
+          </div>
+          <div class="user-about">
+            <div class="user-name"><%= user.name%></div>
+            <div class="status"><i class="fa fa-circle online"></i> online</div>
+          </div>
+          <div class="setting">
+            <div class="dropdown">
+              <i
+                class="fa-solid fa-ellipsis-vertical options"
+                class="btn btn-secondary dropdown-toggle"
+                type="button"
+                id="dropdownMenu2"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              ></i>
+              <ul
+                class="dropdown-menu dropdown-menu-end dropdown-menu-lg-end"
+                aria-labelledby="dropdownMenu2"
+              >
+                <li><a class="dropdown-item" href="/chat">Start chat</a></li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    data-bs-toggle="offcanvas"
+                    href="#offcanvasProfile"
+                    role="button"
+                    aria-controls="offcanvasRequest"
+                  >
+                    Setting
+                  </a>
+                </li>
+                <li>
+                  <a
+                  data-bs-toggle="modal" data-bs-target="#modalRequest"
+                    class="dropdown-item"
+                    href="#modalRequest"
+                    role="button"
+                    aria-controls="modalRequest"
+                  >
+                    Chat request
+                  </a>
+                </li>
+                <li><hr class="dropdown-divider" /></li>
+                <li><a class="dropdown-item" href="/logout">logout</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="people-list" id="people-list">
+          <div class="search">
+            <input
+              type="text"
+              id="search"
+              name="search"
+              value="Search User"
+              alt="Add to Cart"
+              data-bs-toggle="modal"
+              data-bs-target="#staticBackdrop"
+            />
+          </div>
+          <ul class="list">
+            <% for(var i=0; i < users.length; i++) { %>
+
+            <li class="clearfix people-list-header">
+              <div class="profile profile-<%=users[i].profileNum %>">
+                <h2 class="profile-tag"><%= users[i].username.substring(0,2)%></h2>
+              </div>
+              <div class="about">
+                <div class="name">
+                  <a href="/chat/<%=users[i]._id%>-<%=user._id%>"
+                    >@<%= users[i].username %></a
+                  >
+                </div>
+                <div class="status">
+                  <i class="fa fa-circle online"></i> online
+                </div>
+              </div>
+            </li>
+            <%}%>
+          </ul>
+        </div>
+      </div>
+
+      <div class="chat">
+        <div class="chat-header people-list-header  clearfix ">
+          <div class="profile profile-<%=receiver.profileNum %>">
+            <h2 class="profile-tag"><%= receiver.username.substring(0,2)%></h2>
+          </div>
+          <!-- id="receiver_name" -->
+          <div class="chat-about">
+          
+            <div class="chat-with">@<%=receiver.username %></div>
+            <div class="status"><i class="fa fa-circle online"></i> online</div></a>
+          </div>
+          <div class="dropdown chat-header-setting">
+            <i
+              class="fa-solid fa-ellipsis-vertical options"
+              class="btn btn-secondary dropdown-toggle"
+              type="button"
+              id="dropdownMenu"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            ></i>
+            <ul
+              class="dropdown-menu dropdown-menu-end dropdown-menu-lg-end"
+              aria-labelledby="dropdownMenu"
+            >
+              <li>
+                <a
+                  class="dropdown-item"
+                  data-bs-toggle="offcanvas"
+                  href="#offcanvasContact"
+                  role="button"
+                  aria-controls="offcanvasContact"
+                >
+                  Contact Info
+                </a>
+              </li>
+              <!-- <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="/logout">logout</a></li> -->
+            </ul>
+          </div>
+        </div>
+        <!-- end chat-header -->
+
+        <div class="chat-history" id="chat-history">
+          <ul id="messages">
+            <% if(chats.length > 0) {%> <% for(var i=0; i < chats.length; i++) {%>
+             <ul>
+               <li>user_id :  <%=user._id %></li>
+               <li>sender_id :  <%=chats[i].sender._id %></li>
+               <li>receiver_id :  <%=chats[i].receiver._id %></li>
+             </ul>  
+            <%if(user._id !== chats[i].sender._id){%>
+              
+            <li class="clearfix">
+              <div class="message-data align-right">
+
+                <span class="message-data-time"
+                  ><%= moment(chats[i].createdAt).calendar() %></span
+                >
+                &nbsp; &nbsp;
+                <span class="message-data-name"
+                  ><%=chats[i].sender.name %></span
+                >
+                <i class="fa fa-circle me"></i>
+              </div>
+              <div class="message other-message float-right">
+                <%=chats[i].message%>
+              </div>
+            </li>
+            <%} if(user._id !== chats[i].receiver_id){%>
+            <li>
+              <div class="message-data">
+                <span class="message-data-name"
+                  ><i class="fa fa-circle online"></i> <%=chats[i].sender.name
+                  %></span
+                >
+                <span class="message-data-time"
+                  ><%= moment(chats[i].createdAt).calendar() %></span
+                >
+              </div>
+              <div class="message my-message"><%=chats[i].message%></div>
+            </li>
+            <% } %> <% }%> <% } %>
+          </ul>
+        </div>
+        <!-- end chat-history -->
+
+        <div class="chat-message clearfix">
+          <form id="message_form" action="/search" method="post">
+            <textarea
+              name="message"
+              id="message"
+              placeholder="Type your message"
+              rows="3"
+            ></textarea>
+            <input
+              type="hidden"
+              name="username"
+              id="user_name"
+              value="<%= user.name %>"
+            />
+            <input
+              type="hidden"
+              name="userid"
+              id="user_id"
+              value="<%= user._id %>"
+            />
+            <button type="submit" id="send_message">
+              <i class="fa-solid fa-paper-plane"></i>
+            </button>
+          </form>
+        </div>
+      </div>
+      <!-- end chat -->
+    </div>
+
+    <!-- end container -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"
+      integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.2/bootstrap3-typeahead.js"
+      integrity="sha512-P2Z/b+j031xZuS/nr8Re8dMwx6pNIexgJ7YqcFWKIqCdbjynk4kuX/GrqpQWEcI94PRCyfbUQrjRcWMi7btb0g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script
+      src="https://cdn.socket.io/4.4.1/socket.io.min.js"
+      integrity="sha384-fKnu0iswBIqkjxrhQCTZ7qlLHOFEgNkRmK2vaO/LbTZSXdJfAu6ewRBdwHPhBo/H"
+      crossorigin="anonymous"
+    ></script>
+
+    <script src="/deparam.js"></script>
+    <script src="/privatechat.js"></script>
+    <script src="/ajaxSubmit.js"></script>
+  </body>
+</html>

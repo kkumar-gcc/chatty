@@ -24,7 +24,7 @@ export async function validatePassword({ email, password, }: { email: UserDocume
     {
         return false;
     }
-  
+
     return  omit(user.toJSON(),"password");
 }
 

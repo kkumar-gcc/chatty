@@ -1,0 +1,32 @@
+
+  <div class="modal fade" id="settingModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="settingModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-fullscreen">
+      <div class="modal-content">
+         
+        <!-- <div class="modal-body"> -->
+         <div class="setting-container">
+             <div class="setting-left">
+                <ul class="setting-bar">
+                    <li class="setting-sub"><a href="#my-account">My Account</a></li>
+                    <li class="setting-sub"><a href="#user-profile">User Profile</a></li>   
+                  </ul>
+             </div>
+             <div class="setting-right" >
+                <div id="my-account" class="tab-content">
+                    <%-include("partials/myaccount.ejs",{user:user}) %> 
+                  
+                  </div>
+                <div id="user-profile" class="tab-content">
+                    <%-include("partials/userProfile.ejs",{user:user}) %> 
+                   
+                </div>
+             </div>
+             <button type="button" class="btn-close btn-setting" data-bs-dismiss="modal" aria-label="Close"></button>
+       
+         <!-- </div> -->
+        </div>
+       
+      </div>
+    </div>
+  </div>
+  

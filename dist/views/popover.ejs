@@ -1,0 +1,20 @@
+<div class="search-profile">
+  <div class="profile-card">
+    <div class="img">
+      <div class="profile2 profile-<%=user.profileNum %>">
+        <h2 class="profile-tag2">
+          <%= user.username.substring(0,2).toUpperCase()%>
+        </h2>
+      </div>
+    </div>
+    <div class="infos">
+      <div class="name">
+        <h2>@<%= user.username %></h2>
+        <h4><%= user.name %></h4>
+      </div>
+      <% if(user.description) {%>
+      <p class="text"><%= user.description%></p>
+      <% } %>
+    </div>
+  </div>
+</div>

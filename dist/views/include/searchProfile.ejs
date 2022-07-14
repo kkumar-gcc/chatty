@@ -1,0 +1,89 @@
+<div
+  class="modal fade"
+  id="modalSProfile"
+  tabindex="-1"
+  aria-labelledby="modalSProfileLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalUProfileLabel"><%=userStatus.name %>'s Profile</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="user-profile">
+          <div class="profile-top">
+            <div class="profile2 profile-<%=userStatus.profileNum %>">
+              <h2 class="profile-tag2">
+                <%= userStatus.username.substring(0,2).toUpperCase()%>
+              </h2>
+            </div>
+            <h3>@<%=userStatus.username %></h3>
+            <!-- <div class="status"><i class="fa fa-circle online"></i> online</div> -->
+          </div>
+          <div class="profile-bottom">
+            <div class="accordion" id="accordionExample">
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="headingOne">
+                    <button
+                      class="accordion-button"
+                      type="button"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#collapseOne"
+                      aria-expanded="true"
+                      aria-controls="collapseOne"
+                    >
+                      About Me
+                    </button>
+                  </h2>
+                  <div
+                    id="collapseOne"
+                    class="accordion-collapse collapse show"
+                    aria-labelledby="headingOne"
+                    data-bs-parent="#accordionExample"
+                  >
+                    <div class="accordion-body">
+                    
+                      <div class="detail">
+                        <span>Name</span>
+                        <p><%= userStatus.name%></p>
+                      </div>
+                      <div class="detail">
+                        <span>Email</span>
+                        <p><%=userStatus.email%></p>
+                      </div>
+                      <div class="detail">
+                        <span>Description</span>
+                        <p><%=userStatus.description%></p>
+                      </div>
+                      <!-- <div class="detail">
+                        <button
+                          class="view"
+                          type="button"
+                          data-bs-toggle="modal"
+                          data-bs-target="#modalUProfile"
+                        >
+                          Update profile
+                        </button>
+                      </div> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
