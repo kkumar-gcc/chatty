@@ -1,1 +1,1 @@
-worker: npm run prod
+web: node dist/app.js
