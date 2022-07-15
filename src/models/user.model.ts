@@ -8,13 +8,13 @@ export interface UserDocument extends mongoose.Document {
     email: string;
     name: string;
     username: string;
-    friend: Array<object>;
+    friend: object[];
     description:string;
     profileNum:number;
     password: string;
     createdAt: Date;
     updateAt: Date;
-    comparePassword(candidatePassword: String): Promise<boolean>;
+    comparePassword(candidatePassword: string): Promise<boolean>;
 }
 
 const UserSchema = new mongoose.Schema(
@@ -30,11 +30,11 @@ const UserSchema = new mongoose.Schema(
                 status: {
                     type: Number,
                     enums: [
-                        0,    //'add friend',
-                        1,    //'requested',
-                        2,    //'pending',
-                        3,    //'friends',
-                        4,    //'Rejected',
+                        0,    // 'add friend',
+                        1,    // 'requested',
+                        2,    // 'pending',
+                        3,    // 'friends',
+                        4,    // 'Rejected',
                     ]
                 }
             }
@@ -47,8 +47,9 @@ const UserSchema = new mongoose.Schema(
     },
     { timestamps: true }
 );
+// UserSchema.index({username: 'text',name:"text",description:"text"});
 UserSchema.pre("save", async function (next) {
-    let user = this as UserDocument;
+    const user = this as UserDocument;
     if (!user.isModified("password")) return next();
 
     const salt = await bcrypt.genSalt(config.saltWorkFactor);

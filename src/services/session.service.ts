@@ -8,7 +8,7 @@ import log from '../logger';
 import { findUser } from './user.service';
 
 export async function createSession(userId:string,userAgent: string) {
-  
+
         const session = await Session.create({ user: userId,valid:true, userAgent });
         // app.use(sessions({
         //     secret: "thisismysecrctekeyfhrgfgrfrty84fwir767",
@@ -17,7 +17,7 @@ export async function createSession(userId:string,userAgent: string) {
         //     resave: false
         // }));
         return session.toJSON();
-    
+
 
 }
 
@@ -32,21 +32,21 @@ export async function reIssueAccessToken({
     refreshToken: string;
   }) {
     const decoded = verifyJwt(refreshToken);
-  
+
     if (!decoded || !get(decoded, "session")) return false;
-  
+
     const session = await Session.findById(get(decoded, "session"));
-  
+
     if (!session || !session.valid) return false;
-  
+
     const user = await findUser({ _id: session.user });
-  
+
     if (!user) return false;
-  
+
     const accessToken = signJwt(
       { ...user, session: session._id },
       { expiresIn: config.accessTokenTtl } // 15 minutes
     );
-  
+
     return accessToken;
   }

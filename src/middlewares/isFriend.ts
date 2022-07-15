@@ -31,10 +31,9 @@ const isFriend = async (req: Request, res: Response, next: NextFunction) => {
         {
             "$unwind": "$friendUser"
         },
-
         {
             "$project": {
-                "_id": "$friends.user",
+                "_id": "$friendUser._id",
                 "username": "$friendUser.username",
                 "email": "$friendUser.email",
                 "name": "$friendUser.name",
@@ -42,18 +41,16 @@ const isFriend = async (req: Request, res: Response, next: NextFunction) => {
                 "status": "$friends.status",
             }
         }
-    ]);
-    const friend = friendExist.filter((item) => {
-        return item._id == receiverId;
+    ]) as any;
+    const friend = friendExist.find((item: any) => {
+        return item._id.toString() === receiverId
     }) as any;
-
     if (friend) {
-        if ((friend[0].status != 3)) {
+        if ((friend.status !== 3)) {
             return res.redirect("/home");
         }
     }
-
-    if (user._id == receiverId) {
+    if (user._id === receiverId) {
         return res.redirect("back");
     }
     next();

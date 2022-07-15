@@ -1,0 +1,30 @@
+<div class="chat-list">
+    <div class="people-list" id="people-list">
+      <ul class="list">
+        <% for(var i=0; i < friends.length; i++) { %> <%
+        if(friends[i].status==3) {%>
+        <div class="popover-product-update d-none" id="<%=i%>">
+          <%-include("include/popover.ejs",{user:friends[i]})%>
+        </div>
+        <li class="clearfix people-list-header">
+          <div
+            class="profile profile-<%=friends[i].profileNum %>"
+            data-toggle="popover"
+            title="User Info"
+          >
+            <h2 class="profile-tag">
+              <%=friends[i].username.substring(0,2)%>
+            </h2>
+          </div>
+          <div class="about">
+            <div class="name">
+              <a href="/chat/<%=friends[i]._id%>-<%=user._id%>"
+                >@<%= friends[i].username %></a
+              >
+            </div>
+          </div>
+        </li>
+        <% } %> <%}%>
+      </ul>
+    </div>
+  </div>

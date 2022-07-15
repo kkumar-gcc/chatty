@@ -1,4 +1,4 @@
-module.exports = function (io: any) {
+export  default (io: any) => {
     io.on("connection", (socket: any) => {
         socket.on("join chat", (pm: any) => {
             socket.join(pm.room1);

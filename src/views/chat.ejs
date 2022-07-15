@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>welcome @<%=user.username %></title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+      crossorigin="anonymous"
+    />
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+      crossorigin="anonymous"
+    ></script>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+      integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/webui-popover/2.1.15/jquery.webui-popover.min.css" integrity="sha512-n48mMpd2Ez+soTQuZManEgeJeSeBNynyPL7S23uY5zKXZiEpKn529rl4Zu01ZiJEyJPBYMPp5AxNQD3XRh1oeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/profileColor.css" />
+    <link rel="stylesheet" href="/home.css" />
+    <link rel="stylesheet" href="/table.css" />
+    <link rel="stylesheet" href="/searchresult.css" />
+    <link rel="stylesheet" href="/settings.css" />
+  </head>
+  <body>
+    <div class="main-container clearfix">
+      <div class="navbar-container">
+        <%-include("include/navbar.ejs",{user:user})%>
+      </div>
+      <div class="right-container chat-container">
+        <div class="chat-list">
+          <ul class="list">
+            <% for(var i=0; i < friends.length; i++) { %> <%
+            if(friends[i].status==3) {%>
+            <li class="clearfix people-list-header">
+              <div
+                class="profile profile-<%=friends[i].profileNum %> user-popover"
+                id ="friend-<%=friends[i]._id%>"
+              >
+                <a href="/chat/<%=friends[i]._id%>-<%=user._id%>">
+                  <h2 class="profile-tag">
+                    <%=friends[i].username.substring(0,2)%>
+                  </h2>
+                </a>
+              </div>
+              <!--<div class="about">
+                  <div class="name">
+                    <a href="/chat/<%=friends[i]._id%>-<%=user._id%>"
+                      >@<%= friends[i].username %></a
+                    >
+                  </div>
+                </div>-->
+            </li>
+            <% } %> <%}%>
+          </ul>
+        </div>
+
+        <div class="chat">
+          <div class="start-chat-message">
+            <p>Select a chat to Start messaging</p>
+          </div>
+        </div>
+      </div>
+      <!-- end chat -->
+    </div>
+
+    <!-- end container -->
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"
+      integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.2/bootstrap3-typeahead.js"
+      integrity="sha512-P2Z/b+j031xZuS/nr8Re8dMwx6pNIexgJ7YqcFWKIqCdbjynk4kuX/GrqpQWEcI94PRCyfbUQrjRcWMi7btb0g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webui-popover/2.1.15/jquery.webui-popover.min.js" integrity="sha512-PnQiQIdb86U1QdVJOzyZQWS0deb1BFZisR6aEuRtc8KZopFYm5wLqL6+LZMgHmg/niTTEXjUA0C3bhc8CFUzjQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    
+    <script src="/ajaxSubmit.js"></script>
+    <script src="/main.js"></script>
+  </body>
+</html>

@@ -14,7 +14,7 @@ export async function createUserSessionHandler(req: Request, res: Response) {
         return res.redirect("/login");
     }
     const session = await createSession(user._id, req.get("user-agent") || "");
-   
+
     const accessToken = signJwt(
         {  ...user, session: session._id },
         { expiresIn: config.accessTokenTtl }
@@ -36,12 +36,12 @@ export async function createUserSessionHandler(req: Request, res: Response) {
         { expiresIn: config.accessTokenTtl }
     );
    return res.redirect("/home");
-    
+
 }
 
 export async function getUserSessionsHandler(req: Request, res: Response) {
 
-    var  user = req.session.user as any;
+    const  user = req.session.user as any;
 
     const sessions = await findSessions({ user: user.id, valid: true });
 
@@ -63,7 +63,7 @@ export async function deleteUserSessionsHandler(req: Request, res: Response) {
       } else {
         res.end()
       }
-                  
+
 }
 
 

@@ -6,7 +6,7 @@ import log from "../logger";
 import { verifyJwt } from "../utils/jwt.utils";
 
 const isLogin= async (req:Request,res:Response,next:NextFunction)=>{
-    
+
     if (req.session.user) {
         next();
       } else {

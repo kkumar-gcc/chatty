@@ -1,5 +1,5 @@
 import http from 'http';
-const app = require('./appConfig');
-
-module.exports = http.createServer(app);
+import app from "./appConfig";
+const server = http.createServer(app)
+export default server;
 

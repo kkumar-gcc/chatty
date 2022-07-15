@@ -1,4 +1,4 @@
-const server = require('./serverConfig');
+import server from './serverConfig';
 import { Server } from "socket.io";
-
-module.exports = new Server(server);
+const socket = new Server(server);
+export default socket;

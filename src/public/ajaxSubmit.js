@@ -1,25 +1,11 @@
 $(document).ready(function () {
-//   $("#message_form").on("submit", function (e) {
-//     e.preventDefault();
-//     /profile/update
-//       $.ajax({
-//         url: "/chat/" + parameOne,
-//         type: "POST",
-//         data: {
-//           message: msg,
-//         },
-//         success: function (data) {
-//           $("#message").val("");
-//         },
-//       });
-  
-// });
+
   
   $("input.typeahead").typeahead({
     header: "Your Events",
     source: function (query, process) {
       return $.getJSON(
-        "/search",
+        "/searchUser",
         {
           query: query,
         },
@@ -65,5 +51,50 @@ $(document).ready(function () {
     matcher: function (item) {
       return item;
     },
+  });
+
+  //user detail popover 
+
+  $(document).on("mouseover", ".user-popover", function (e) {
+    var el = $(this);
+    e.preventDefault(e);
+    var timeoutId = setTimeout(function () {
+      $.ajaxSetup({
+        header: $('meta[name="_token"]').attr("content"),
+      });
+
+      var id = el.attr("id");
+      var dummyVar = id.split("-");
+      var user_id = dummyVar[1];
+      console.log(user_id);
+      $.ajax({
+        type: "PUT",
+        url: "/user-detail",
+        data: {
+          userId: user_id,
+        },
+        dataType: "json",
+        success: function (data) {
+          console.log(data);
+          $("#" + id).webuiPopover({
+            content: data,
+            animation: "pop",
+            trigger: "hover",
+            placement: "auto",
+            delay: {
+              show: null,
+              hide: 300,
+            },
+          });
+          $("#" + id).webuiPopover("show");
+        },
+        error: function (data) {
+          console.log(data);
+        }
+      });
+    }, 2000);
+    el.mouseleave(function () {
+      clearTimeout(timeoutId);
+    });
   });
 });

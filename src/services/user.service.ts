@@ -10,6 +10,10 @@ export async function createUser(input: DocumentDefinition<UserDocument>) {
 
 export async function validatePassword({ email, password, }: { email: UserDocument["email"], password: string }) {
     const user = await User.findOne({email});
+    // "$or": [
+    //     {"username": email},
+    //     {"email": email}
+    // ]});
 
     if(!user){
         return false;
@@ -20,7 +24,7 @@ export async function validatePassword({ email, password, }: { email: UserDocume
     {
         return false;
     }
-  
+
     return  omit(user.toJSON(),"password");
 }
 
