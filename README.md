@@ -10,6 +10,9 @@ cd chatty
 #install npm 
 npm install
 
+#copy .env.example file in .env
+cp .env.example .env
+
 #run app
 npm run dev
 
