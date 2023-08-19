@@ -23,7 +23,9 @@ export async function createUserSessionHandler(req: Request, res: Response) {
     const {decoded,expired,valid}= await verifyJwt(accessToken) ;
 
     if(decoded){
-        req.session.user=decoded;
+        if(req?.session){
+            req.session.user=decoded;
+        }
     }
 
     res.cookie("accessToken",accessToken,{
@@ -41,7 +43,7 @@ export async function createUserSessionHandler(req: Request, res: Response) {
 
 export async function getUserSessionsHandler(req: Request, res: Response) {
 
-    const  user = req.session.user as any;
+    const  user = req?.session?.user as any;
 
     const sessions = await findSessions({ user: user.id, valid: true });
 
@@ -49,7 +51,7 @@ export async function getUserSessionsHandler(req: Request, res: Response) {
 }
 
 export async function deleteUserSessionsHandler(req: Request, res: Response) {
-    const user = req.session.user as any;
+    const user = req?.session?.user as any;
 
     if (req.session) {
        await Session.deleteMany({ "user" :Object( user._id)});

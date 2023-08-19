@@ -7,12 +7,12 @@ import Message from '../models/message.model';
 import mongoose from 'mongoose';
 export async function getChatHandler(req: Request, res: Response) {
     const users = await User.find() as any;
-    return res.render("privatechat.ejs", { users, user: req.session.user });
+    return res.render("privatechat.ejs", { users, user: req?.session?.user });
 }
 export async function getRoomHandler(req: Request, res: Response) {
     // var users = await User.find() as any;
 
-    const user = req.session.user as any;
+    const user = req?.session?.user as any;
 
     const params = req.params.id.split('-');
 

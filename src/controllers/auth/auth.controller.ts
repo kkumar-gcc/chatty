@@ -7,7 +7,7 @@ import {
 
 export async function resetPasswordRequestHandler(req: Request, res: Response, next: NextFunction) {
     return res.render("resetPassword.ejs");
-};
+}
 
 export async function newPasswordRequestHandler(req: Request, res: Response, next: NextFunction) {
 
@@ -17,7 +17,7 @@ export async function newPasswordRequestHandler(req: Request, res: Response, nex
     const token = params[0];
 
     return res.render("newPassword.ejs", { userId, token });
-};
+}
 export async function resetPasswordResponseHandler(req: Request, res: Response, next: NextFunction) {
     try {
         const requestPasswordResetService = await requestPasswordReset(req.body.email );
@@ -28,7 +28,7 @@ export async function resetPasswordResponseHandler(req: Request, res: Response, 
     }
 
 
-};
+}
 
 export async function newPasswordResponseHandler(req: Request, res: Response, next: NextFunction) {
     const resetPasswordService = await resetPassword(
@@ -37,4 +37,4 @@ export async function newPasswordResponseHandler(req: Request, res: Response, ne
         req.body.password
     );
     return res.render("login.ejs", { "msg": "password updated successfully" });
-};
+}

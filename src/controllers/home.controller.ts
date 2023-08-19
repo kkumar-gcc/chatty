@@ -8,7 +8,7 @@ import User from '../models/user.model';
 import Friend from '../models/friend.model';
 import mongoose from 'mongoose';
 export async function getHomeHandler(req: Request, res: Response) {
-    const user = req.session.user as any;
+    const user = req?.session?.user as any;
 
     async.parallel([
         async (callback: any) => {

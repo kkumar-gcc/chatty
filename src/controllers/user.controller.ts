@@ -29,7 +29,7 @@ export async function createUserHandler(req: Request, res: Response) {
     }
 }
 export async function getUserHandler(req: Request, res: Response) {
-    const user = req.session.user as any;
+    const user = req?.session?.user as any;
     User.findOneAndUpdate({ _id: user._id }, { name: req.body.name, description: req.body.description }, { new: true }, (err: any, doc: any) => {
         return res.redirect("/home");
     });

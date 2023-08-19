@@ -11,7 +11,7 @@ import { omit } from 'lodash';
 // }
 export async function postMessageHandler(req: Request, res: Response, next: NextFunction) {
 
-    const user = req.session.user as any;
+    const user = req?.session?.user as any;
 
     const params = req.params.id.split('-');
 

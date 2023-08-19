@@ -7,7 +7,7 @@ import async from 'async';
 import mongoose from 'mongoose';
 export async function searchUserResultHandler(req: Request, res: Response) {
     const searchUsername = req.query.query as any;
-    const searchUser = req.session.user as any;
+    const searchUser = req?.session?.user as any;
     const results = [] as any;
 
     try {
@@ -22,12 +22,12 @@ export async function searchUserResultHandler(req: Request, res: Response) {
     res.send(JSON.stringify(results));
 }
 export async function searchResultHandler(req: Request, res: Response) {
-    const user = req.session.user as any;
+    const user = req?.session?.user as any;
     return res.render("search.ejs", { user });
 }
 export async function getsearchResultHandler(req: Request, res: Response) {
     const username = req.body.query as any;
-    const user = req.session.user as any;
+    const user = req?.session?.user as any;
     const receiverId = req.body.receiverId as string;
 
     if (username && (user.username !== username)) {

@@ -22,7 +22,7 @@ const validate = (schema: AnySchema) => async (req: Request, res: Response, next
                 }
             });
             req.flash("errors",errors);
-            return  res.redirect("back");;
+            return  res.redirect("back");
         }
         return res.status(500).send("Something went wrong");
     }

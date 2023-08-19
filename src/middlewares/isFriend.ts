@@ -7,7 +7,7 @@ import { verifyJwt } from "../utils/jwt.utils";
 import mongoose from "mongoose";
 const isFriend = async (req: Request, res: Response, next: NextFunction) => {
 
-    const user = req.session.user as any;
+    const user = req?.session?.user as any;
 
     const params = req.params.id.split('-');
 

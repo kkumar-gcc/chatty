@@ -11,7 +11,9 @@ const deserializeUser= async (req:Request,res:Response,next:NextFunction)=>{
         return next();
     }
     if(decoded){
-        req.session.user=decoded;
+        if(req.session){
+            req.session.user=decoded;
+        }
         next();
     }
     return next();

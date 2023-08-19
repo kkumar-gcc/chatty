@@ -7,7 +7,7 @@ import async from 'async';
 import Friend from '../models/friend.model';
 import mongoose from 'mongoose';
 export async function getChatFriendHandler(req: Request, res: Response) {
-    const user = req.session.user as any;
+    const user = req?.session?.user as any;
 
     async.parallel([
         async (callback: any) => {
@@ -52,7 +52,7 @@ export async function getChatFriendHandler(req: Request, res: Response) {
     })
 }
 export async function userFriendRequestsHandler(req: Request, res: Response) {
-    const user = req.session.user as any;
+    const user = req?.session?.user as any;
 
     async.parallel([
         async (callback: any) => {
@@ -100,7 +100,7 @@ export async function userFriendRequestsHandler(req: Request, res: Response) {
 
 
 export async function userFriendHandler(req: Request, res: Response) {
-    const user = req.session.user as any;
+    const user = req?.session?.user as any;
 
     // const updateUserA = await User.findOneAndUpdate(
     //     { _id: Object(user._id), "friends.user": Object(req.body.recipientId) },
@@ -131,7 +131,7 @@ export async function userFriendHandler(req: Request, res: Response) {
 }
 
 export async function friendReqActionHandler(req: Request, res: Response) {
-    const user = req.session.user as any;
+    const user = req?.session?.user as any;
 
     if (req.body.action === "Accept") {
         const updateUserA = await User.updateOne(
