@@ -17,3 +17,7 @@ cp .env.example .env
 npm run dev
 
 ```
+## User Manual
+
+Check out our [User Manual](./USERMANUAL.md) for detailed instructions and guidance.
+
